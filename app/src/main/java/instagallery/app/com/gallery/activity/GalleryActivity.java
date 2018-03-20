@@ -1,8 +1,11 @@
 package instagallery.app.com.gallery.activity;
 
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -19,10 +22,17 @@ import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.tbruyelle.rxpermissions2.Permission;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.io.File;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -33,14 +43,17 @@ import instagallery.app.com.gallery.Model.Data;
 import instagallery.app.com.gallery.Network.InstaView;
 import instagallery.app.com.gallery.Network.InstagramRequestPresenter;
 import instagallery.app.com.gallery.R;
+import instagallery.app.com.gallery.Utils.DownloadFileFromURL;
 import instagallery.app.com.gallery.Utils.Utils;
 import instagallery.app.com.gallery.adapter.CustomStaggeredLayoutManager;
 import instagallery.app.com.gallery.adapter.GalleryStaggeredGridAdapter;
 import instagallery.app.com.gallery.view.CollapseLayoutLottieView;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import rx.functions.Action1;
 
+import static instagallery.app.com.gallery.Application.databaseHandler;
 import static instagallery.app.com.gallery.Utils.Utils.showSnackbarConnectivity;
 
 
@@ -54,6 +67,7 @@ public class GalleryActivity extends AppCompatActivity implements InstaView, Swi
     @BindView(R.id.barlayout_animation) CollapseLayoutLottieView barlayout_animation;
     @BindView(R.id.coordinatorLayout) CoordinatorLayout coordinatorLayout;
 
+     Gson gson = new Gson();
 
     public static String mUsername = "";
     public static String mUserPicture = "";
@@ -86,8 +100,6 @@ public class GalleryActivity extends AppCompatActivity implements InstaView, Swi
             @Override
             public void onNext(String user_name) {
                 username.setText(user_name);
-                Log.d("userdd", "toto");
-
             }
 
             @Override
@@ -131,14 +143,32 @@ public class GalleryActivity extends AppCompatActivity implements InstaView, Swi
 
         if (savedInstanceState == null) {
             if (getIntent() != null) {
-                Intent i = this.getIntent();
-                access_token = i.getStringExtra(getApplicationContext().getString(R.string.intent_acces_stoken));
+                Intent intent = this.getIntent();
+                access_token = intent.getStringExtra(getApplicationContext().getString(R.string.intent_acces_stoken));
                 data.clear();
                 InitRecyclerView();
-                adapter.notifyDataSetChanged();
 
                 // presenter to request instagram user data
-                instagramPresenter.Gallery_ReqestData(GalleryActivity.this, access_token, getApplicationContext().getString(R.string.type_instagram));
+                if (Utils.isConnected(getApplicationContext())) {
+                    RequestDataFromNetowrk();
+                }else {
+                    Type type = new TypeToken<ArrayList<Data>>() {}.getType();
+                    String SavedPicDataModel= Application.getDatabaseHandler().getDatamodel();
+                    data = gson.fromJson(SavedPicDataModel, type);
+                    for (Data data : data){
+                        username.setText(data.getUser().getFull_name());
+                        Picasso.with(GalleryActivity.this)
+                                .load(data.getImages().getStandard_resolution().getUrl())
+                                .networkPolicy(NetworkPolicy.OFFLINE)
+                                .resize(270, 270)
+                                .centerCrop()
+                                .into(userpicture);
+
+                    }
+                    adapter.AddData(data);
+
+
+                }
             }else {
                 finish();
             }
@@ -221,21 +251,25 @@ public class GalleryActivity extends AppCompatActivity implements InstaView, Swi
     public void RequestSuccess() {
         adapter.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(false);
+        String PicturesAsGson= gson.toJson(data);
+
+        if (databaseHandler.getCountPictures()>0){
+            databaseHandler.deleteAllImages();
+        }
+        databaseHandler.addDataModel(PicturesAsGson);
     }
 
     @Override
     public void noNetworkConnectivity() {
         showSnackbarConnectivity(getApplicationContext(),coordinatorLayout);
-
     }
 
     @Override
     public void onRefresh() {
         if(Utils.isConnected(getApplicationContext())) {
             data.clear();
-            InitRecyclerView();
-            adapter.clearData();
-            instagramPresenter.Gallery_ReqestData(GalleryActivity.this, access_token, getApplicationContext().getString(R.string.type_instagram));
+          //  adapter.clearData();
+            RequestDataFromNetowrk();
         }else {
             showSnackbarConnectivity(getApplicationContext(),coordinatorLayout);
             swipeRefreshLayout.setRefreshing(false);
@@ -309,5 +343,35 @@ public class GalleryActivity extends AppCompatActivity implements InstaView, Swi
         }else{
             finish();
         }
+    }
+
+    private void RequestDataFromNetowrk(){
+        RxPermissions rxPermissions = new RxPermissions(this); // where this is an Activity instance
+        // Must be done during an initialization phase like onCreate
+        rxPermissions
+                .requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE)
+                .subscribe(new Consumer<Permission>() {
+                    @Override
+                    public void accept(Permission permission) throws Exception {
+                        if (permission.granted) {
+                            // `permission.name` is granted !
+                            instagramPresenter.Gallery_ReqestData(GalleryActivity.this, access_token, getApplicationContext().getString(R.string.type_instagram));
+
+                        } else if (permission.shouldShowRequestPermissionRationale) {
+                            Toast.makeText(GalleryActivity.this, "Denied permission without ask never again",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(GalleryActivity.this, "Permission denied, can't enable the Location",
+                                    Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        Log.e("TAG", "onError," + throwable.getMessage());
+                    }
+                });
     }
 }

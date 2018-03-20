@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
@@ -32,7 +33,7 @@ public class GalleryStaggeredGridAdapter extends CustomRecyclerViewAdapter {
     private Activity activity;
     private int screenWidth;
     private int screenHeight;
-
+    private boolean success=false;
 
     public GalleryStaggeredGridAdapter(Activity activity, ArrayList<Data> images) {
         this.activity = activity;
@@ -89,45 +90,51 @@ public class GalleryStaggeredGridAdapter extends CustomRecyclerViewAdapter {
             height = screenHeight/(int)2.2;
         }
 
+           success=false;
 
 
-        Picasso.with(activity)
-                .load(myHolder.getImages().getStandard_resolution().getUrl())
-                .networkPolicy(NetworkPolicy.OFFLINE)
-                .resize(screenWidth / 2, height)
-                .centerCrop()
-               .into(((Holder) holder).images, new Callback() {
-            @Override
-            public void onSuccess() {
-                Log.v("Picasso","fetch cache");
-            }
-
-            @Override
-            public void onError() {
-                // Try again online if cache failed
                 Picasso.with(activity)
                         .load(Uri.parse(myHolder.getImages().getStandard_resolution().getUrl()))
                         .error(R.drawable.ic_close)
+                        .memoryPolicy(MemoryPolicy.NO_CACHE)
                         .placeholder(R.drawable.ic_photo_camera)
                         .resize(screenWidth / 2, height)
                         .centerCrop()
                         .into(((Holder) holder).images, new Callback() {
                             @Override
                             public void onSuccess() {
-                                Log.v("Picasso","fetch online");
-
+                                Log.v("Picasso","fetch online"
+                                        );
+                                success=true;
                             }
 
                             @Override
                             public void onError() {
                                 Log.v("Picasso","Could not fetch image");
+                                if (!success) {
+                                    Picasso.with(activity)
+                                            .load(Uri.parse(myHolder.getImages().getStandard_resolution().getUrl()))
+                                            .networkPolicy(NetworkPolicy.OFFLINE)
+                                            .error(R.drawable.ic_close)
+                                            .placeholder(R.drawable.ic_photo_camera)
+                                            .resize(screenWidth / 2, height)
+                                            .centerCrop()
+                                            .into(((Holder) holder).images, new Callback() {
+                                                @Override
+                                                public void onSuccess() {
+                                                    Log.v("Picasso", "fetch DISK");
+
+                                                }
+
+                                                @Override
+                                                public void onError() {
+                                                    Log.v("Picasso", "Could not fetch no network");
+
+                                                }
+                                            });
+                                }
                             }
                         });
-
-            }
-        });
-
-
 
 
         if (myHolder.getLikes().getCount()!=null) {
@@ -166,4 +173,11 @@ public class GalleryStaggeredGridAdapter extends CustomRecyclerViewAdapter {
         this.notifyDataSetChanged();
     }
 
+    public void AddData(ArrayList<Data> list){
+        images.clear();
+        images.addAll(list);
+        this.notifyDataSetChanged();
+    }
+
+    
 }

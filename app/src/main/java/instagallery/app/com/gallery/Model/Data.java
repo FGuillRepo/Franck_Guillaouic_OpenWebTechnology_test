@@ -71,7 +71,6 @@ private Images images;
     public class Images implements Serializable{
 
 
-
         private Thumbnail thumbnail;
         private Standard_resolution standard_resolution;
 
@@ -83,7 +82,6 @@ private Images images;
         public Standard_resolution getStandard_resolution() {
             return standard_resolution;
         }
-
 
 
         public class Thumbnail implements Serializable{
@@ -101,6 +99,10 @@ private Images images;
  
             public String getUrl() {
                 return url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url;
             }
         }
     }

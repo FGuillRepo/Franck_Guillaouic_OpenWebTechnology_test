@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.io.Serializable;
 
+import instagallery.app.com.gallery.Model.Data;
 import instagallery.app.com.gallery.Model.User;
 
 /**
@@ -27,6 +28,9 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable{
     private static final String KEY_ID = "keyid";
     private static final String KEY_TOKEN = "keyToken";
 
+    private static final String Table_UserImages = "TableUserImages";
+    private static final String KEY_DATAMODEL = "DataModel";
+
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -39,6 +43,9 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable{
         String createTable_User = "CREATE TABLE " + Table_UserData + "("+ KEY_ID +" TEXT," + KEY_TOKEN +" TEXT);";
         db.execSQL(createTable_User);
 
+
+        String createTable_PicturesUser = "CREATE TABLE " + Table_UserImages + "("+  KEY_DATAMODEL +" TEXT);";
+        db.execSQL(createTable_PicturesUser);
     }
 
 
@@ -52,7 +59,8 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable{
     }
 
     /*
-    *  Function for Picture Database
+    *  Function for adding Token
+    *
     *
     * */
     public void addToken(User user) throws SQLiteException {
@@ -105,13 +113,47 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable{
     {
         SQLiteDatabase sdb= this.getWritableDatabase();
         sdb.delete(Table_UserData, null, null);
-
     }
 
      /*
-    *  Function to store temporary pictures (reception or pickup)
+    *  Function to store temporary pictures
     *
     * */
+
+    public void addDataModel(String dataModel) throws SQLiteException {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_DATAMODEL, dataModel);
+        db.insert(Table_UserImages, null, cv);
+        db.close(); // Closing database connection
+    }
+
+    public String getDatamodel() {
+
+        String selectQuery = "SELECT * FROM " + Table_UserImages;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+        String token = cursor.getString(0);
+        return token;
+    }
+
+
+    public int getCountPictures() {
+        String countQuery = "SELECT  * FROM " + Table_UserImages;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int cnt = cursor.getCount();
+        cursor.close();
+        return cnt;
+    }
+
+    public void deleteAllImages()
+    {
+        SQLiteDatabase sdb= this.getWritableDatabase();
+        sdb.delete(Table_UserImages, null, null);
+    }
+
 
 
 }
