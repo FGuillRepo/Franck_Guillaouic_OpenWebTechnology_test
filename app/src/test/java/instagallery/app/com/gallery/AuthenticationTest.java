@@ -13,10 +13,6 @@ import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.support.v4.SupportFragmentTestUtil;
 
-import instagallery.app.com.gallery.dialog.AuthenticationDialog;
-import instagallery.app.com.gallery.activity.AuthentificationActivity;
-import instagallery.app.com.gallery.fragment.AuthenticationFragment;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 

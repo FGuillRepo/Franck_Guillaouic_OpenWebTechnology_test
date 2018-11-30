@@ -1,37 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="instagallery.app.com.gallery">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.ar" android:required="true"/>
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:name=".Application"
+        android:name="com.guillaouic.test.Application"
         android:theme="@style/AppTheme"
-        android:hardwareAccelerated="true"
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning"
         android:configChanges="orientation|screenSize"
-
         >
-        <activity android:name=".LauncherApplication">
+
+        <meta-data android:name="com.google.ar.core" android:value="required" />
+
+        <activity android:name="com.guillaouic.test.LauncherApplication">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.AuthentificationActivity">
+        <activity android:name="com.guillaouic.test.activity.RepositoryDetailActivity">
+
         </activity>
 
-        <activity android:name=".activity.GalleryActivity">
-        </activity>
-
-        <activity android:name=".activity.GalleryDetailActivity">
+        <activity android:name="com.guillaouic.test.activity.RepositoryActivity">
 
         </activity>
 
