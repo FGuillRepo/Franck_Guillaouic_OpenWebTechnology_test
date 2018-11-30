@@ -24,7 +24,7 @@ public class RequestPresenter implements Presenter, Interactor.OnRequestFinished
     // Request Github repo data user
 
     @Override
-    public void ReqestData(Context context, int page) {
+    public void RequestRepository(Context context, int page) {
         View.ShowRequestProgress();
 
         if (Utils.isConnected(context)) {

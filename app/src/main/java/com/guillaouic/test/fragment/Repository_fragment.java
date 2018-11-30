@@ -67,19 +67,16 @@ public class Repository_fragment extends Fragment implements RequestView, Reposi
         ButterKnife.bind(this, inflate);
         onItemRepoClickListener = this;
 
-        mPresenter = new RequestPresenter(this);
-        Initalize_RecyclerView();
+        InitRecyclerView();
 
-        if (Utils.isConnected(getContext())) {
-            ShowLoading();
-            mPresenter.ReqestData(getActivity(), currentPage);
-        }
+        mPresenter = new RequestPresenter(this);
+        mPresenter.RequestRepository(getActivity(), currentPage);
 
         return inflate;
     }
 
 
-    public void Initalize_RecyclerView() {
+    public void InitRecyclerView() {
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerview.setLayoutManager(layoutManager);
@@ -136,7 +133,7 @@ public class Repository_fragment extends Fragment implements RequestView, Reposi
 
     private void loadNextPage() {
         currentPage++;
-        mPresenter.ReqestData(getActivity(), currentPage);
+        mPresenter.RequestRepository(getActivity(), currentPage);
     }
 
 
