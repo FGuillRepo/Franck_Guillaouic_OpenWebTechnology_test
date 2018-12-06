@@ -2,6 +2,7 @@ package com.guillaouic.test.fragment;
 
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
@@ -66,9 +67,9 @@ public class Repository_fragment extends Fragment implements RequestView, Reposi
         inflate = inflater.inflate(R.layout.fragment_repository, container, false);
         ButterKnife.bind(this, inflate);
         onItemRepoClickListener = this;
+        animation_nonetwork.getIndeterminateDrawable().setColorFilter(getActivity().getResources().getColor(R.color.blue), PorterDuff.Mode.SRC_IN);
 
         InitRecyclerView();
-
         mPresenter = new RequestPresenter(this);
         mPresenter.RequestRepository(getActivity(), currentPage);
 
@@ -119,6 +120,7 @@ public class Repository_fragment extends Fragment implements RequestView, Reposi
 
     @Override
     public void ShowRequestProgress() {
+        ShowLoading();
     }
 
     @Override
@@ -128,7 +130,7 @@ public class Repository_fragment extends Fragment implements RequestView, Reposi
 
     @Override
     public void noNetworkConnectivity() {
-
+        HideNetworkView();
     }
 
     private void loadNextPage() {

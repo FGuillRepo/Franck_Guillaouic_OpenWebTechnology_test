@@ -27,8 +27,7 @@ public class RequestPresenter implements Presenter, Interactor.OnRequestFinished
     public void RequestRepository(Context context, int page) {
         View.ShowRequestProgress();
 
-
-            Interactor.getData(context, this,page);
+        Interactor.getData(context, this,page);
           //  View.noNetworkConnectivity();
 
     }
