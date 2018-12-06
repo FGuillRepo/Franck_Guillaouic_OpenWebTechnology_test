@@ -2,7 +2,7 @@ package com.guillaouic.test.Network;
 
 import android.content.Context;
 
-import com.guillaouic.test.activity.Utils.Utils;
+import com.guillaouic.test.Utils.Utils;
 
 /**
  *
@@ -27,11 +27,10 @@ public class RequestPresenter implements Presenter, Interactor.OnRequestFinished
     public void RequestRepository(Context context, int page) {
         View.ShowRequestProgress();
 
-        if (Utils.isConnected(context)) {
+
             Interactor.getData(context, this,page);
-        }else{
-            View.noNetworkConnectivity();
-        }
+          //  View.noNetworkConnectivity();
+
     }
 
 

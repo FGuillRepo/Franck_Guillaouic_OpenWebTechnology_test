@@ -28,7 +28,7 @@ import com.guillaouic.test.Network.RequestView;
 import com.guillaouic.test.activity.RepositoryDetailActivity;
 
 import instagallery.app.com.gallery.R;
-import com.guillaouic.test.activity.Utils.Utils;
+
 import com.guillaouic.test.adapter.RepositoryAdapter;
 
 

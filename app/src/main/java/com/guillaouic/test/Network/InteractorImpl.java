@@ -24,7 +24,7 @@ public class InteractorImpl implements Interactor {
     public void getData(final Context context, final OnRequestFinishedListener listener, int page) {
         Log.d("page",String.valueOf(page));
         this.listener = listener;
-        Call<List<Repository>> call = RetroFitClient.getRetroFitService(context).getRepository(page);
+        Call<List<Repository>> call = new RetroFitClient().getRetroFitService(context).getRepository(page);
         call.enqueue(new Callback<List<Repository>>() {
             @Override
             public void onResponse(Call<List<Repository>> call, Response<List<Repository>> response) {

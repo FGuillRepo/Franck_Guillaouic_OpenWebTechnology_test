@@ -1,4 +1,4 @@
-package com.guillaouic.test.activity.Utils;
+package com.guillaouic.test.Utils;
 
 import android.app.Dialog;
 import android.content.Context;
