@@ -12,7 +12,7 @@ import instagallery.app.com.gallery.R;
 import com.guillaouic.test.fragment.Repository_fragment;
 
 
-public class RepositoryActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class RepositoryActivity extends AppCompatActivity implements View.OnClickListener{
 
 
     @Override
@@ -82,13 +82,6 @@ public class RepositoryActivity extends AppCompatActivity implements View.OnClic
         switch (view.getId()) {
         }
     }
-
-
-    @Override
-    public void onRefresh() {
-
-    }
-
 
 }
 
