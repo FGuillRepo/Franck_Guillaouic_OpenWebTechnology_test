@@ -24,6 +24,7 @@ public class RetroFitClient {
     public static final String HEADER_CACHE_CONTROL = "Cache-Control";
     public static final String HEADER_PRAGMA = "Pragma";
 
+    // retrofit
 
     public  Retrofit createRetroFit() {
         Login_URL login_url=new Login_URL(context);
