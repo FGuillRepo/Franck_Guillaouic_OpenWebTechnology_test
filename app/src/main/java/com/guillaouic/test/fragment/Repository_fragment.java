@@ -68,6 +68,7 @@ public class Repository_fragment extends Fragment implements RequestView, Reposi
         ButterKnife.bind(this, inflate);
         onItemRepoClickListener = this;
         animation_nonetwork.getIndeterminateDrawable().setColorFilter(getActivity().getResources().getColor(R.color.blue), PorterDuff.Mode.SRC_IN);
+        ShowLoading();
 
         InitRecyclerView();
         mPresenter = new RequestPresenter(this);
@@ -120,7 +121,7 @@ public class Repository_fragment extends Fragment implements RequestView, Reposi
 
     @Override
     public void ShowRequestProgress() {
-        ShowLoading();
+
     }
 
     @Override
