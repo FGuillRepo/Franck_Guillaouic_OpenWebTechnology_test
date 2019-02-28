@@ -28,7 +28,7 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private ArrayList<Repository> AL_id_text = new ArrayList<Repository>();
     private Context mContext;
     private int selectedPosition = 0;
-
+    //test
 
     public interface OnItemRepoClickListener {
         void RepoClickEvent(Repository repository);
@@ -183,7 +183,6 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void addLoadingFooter() {
         add(null);
         notifyItemInserted(AL_id_text.size() - 1);
-
     }
 
     public void removeLoadingFooter() {
