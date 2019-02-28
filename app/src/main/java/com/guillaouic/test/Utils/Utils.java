@@ -40,7 +40,6 @@ public class Utils {
 
     public interface Click {
         void Ok();
-
         void Cancel();
     }
 
