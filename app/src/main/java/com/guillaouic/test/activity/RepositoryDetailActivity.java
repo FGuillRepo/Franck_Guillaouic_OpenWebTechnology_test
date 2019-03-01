@@ -26,6 +26,7 @@ public class RepositoryDetailActivity extends Activity {
     @BindView(R.id.description) TextView description;
     @BindView(R.id.updatedate) TextView updatedate;
     @BindView(R.id.login) TextView login;
+    @BindView(R.id.title_toolbar) TextView title_toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +34,14 @@ public class RepositoryDetailActivity extends Activity {
         setContentView(R.layout.activity_repositorydetail);
         ButterKnife.bind(this,this);
 
+        title_toolbar.setText(getString(R.string.screen_information));
+
         if (savedInstanceState==null){
             Intent intent= getIntent();
             Bundle bundle= intent.getExtras();
 
             if (bundle!=null){
-            Repository repository = (Repository) bundle.getSerializable("repository");
+                Repository repository = (Repository) bundle.getSerializable("repository");
                 setInformation(title,repository.getName());
                 setInformation(description,String.valueOf(repository.getDescription()));
                 setInformation(login,repository.getOwner().getLogin());

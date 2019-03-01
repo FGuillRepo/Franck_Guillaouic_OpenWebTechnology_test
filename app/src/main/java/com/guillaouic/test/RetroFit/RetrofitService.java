@@ -4,6 +4,8 @@ package com.guillaouic.test.RetroFit;
 import java.util.List;
 
 import com.guillaouic.test.Model.Repository;
+
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -18,7 +20,7 @@ public interface RetrofitService {
             "Accept-Language: en",
     })
     @GET("users/google/repos?per_page=20&page=nbpage")
-    Call<List<Repository>> getRepository(@Query("nbpage") int page);
+    Observable<List<Repository>> getRepository(@Query("nbpage") int page);
 
 
 }

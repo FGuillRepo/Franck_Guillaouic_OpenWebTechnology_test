@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -46,10 +47,11 @@ public class Repository_fragment extends Fragment implements RequestView, Reposi
     @BindView(R.id.animation_nonetwork) ProgressBar animation_nonetwork;
     @BindView(R.id.frame_nonetwork) RelativeLayout frame_nonetwork;
     @BindView(R.id.reconnect) LinearLayout reconnect;
-    @BindView(R.id.frame_expand) RelativeLayout frame_expand;
+    @BindView(R.id.frame_expand) LinearLayout frame_expand;
     @BindView(R.id.coordinatorLayout) CoordinatorLayout coordinatorLayout;
     @BindView(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
     @BindView(R.id.no_item) LinearLayout no_item;
+    @BindView(R.id.title_toolbar) TextView title_toolbar;
 
     private RequestPresenter mPresenter;
 
@@ -66,6 +68,7 @@ public class Repository_fragment extends Fragment implements RequestView, Reposi
                              Bundle savedInstanceState) {
         inflate = inflater.inflate(R.layout.fragment_repository, container, false);
         ButterKnife.bind(this, inflate);
+        title_toolbar.setText(getString(R.string.app_name));
         onItemRepoClickListener = this;
         animation_nonetwork.getIndeterminateDrawable().setColorFilter(getActivity().getResources().getColor(R.color.blue), PorterDuff.Mode.SRC_IN);
         ShowLoading();

@@ -1,61 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical"
-
+    android:background="@color/grey"
     >
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
-        android:textColor="@color/black"
-        tools:text="title" />
+    <include layout="@layout/view_toolbar">
+    </include>
 
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/title"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
-        android:textColor="@color/black"
-        tools:text="description" />
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:background="@color/white"
+       >
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="15dp"
+           android:layout_marginLeft="15dp"
+           >
 
-    <TextView
-        android:id="@+id/login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/description"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
-        android:textColor="@color/black"
-        tools:text="login" />
+           <TextView
+               android:id="@+id/title"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textColor="@color/black"
+               tools:text="title" />
+
+           <TextView
+               android:id="@+id/description"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_below="@id/title"
+               android:layout_marginTop="15dp"
+               android:textColor="@color/black"
+               tools:text="description" />
+
+           <TextView
+               android:id="@+id/login"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_below="@id/description"
+               android:layout_marginTop="15dp"
+               android:textColor="@color/black"
+               tools:text="login" />
 
 
-    <TextView
-        android:id="@+id/updatedate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/login"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
-        tools:text="updatedate" />
+           <TextView
+               android:id="@+id/updatedate"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="15dp"
+               android:layout_below="@+id/login"
+               android:paddingBottom="10dp"
+               android:textColor="@color/black"
+               tools:text="updatedate" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_close"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/close_button"/>
+           <ImageView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:src="@drawable/ic_close"
+               android:layout_marginRight="20dp"
+               android:layout_alignParentRight="true"
+               android:layout_alignParentEnd="true"
+               android:id="@+id/close_button"/>
 
-</RelativeLayout>
+       </RelativeLayout>
+
+   </RelativeLayout>
+</LinearLayout>
 
 

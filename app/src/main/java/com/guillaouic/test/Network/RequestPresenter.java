@@ -19,17 +19,13 @@ public class RequestPresenter implements Presenter, Interactor.OnRequestFinished
         this.View = loginView;
         this.Interactor = new InteractorImpl();
     }
-
-
     // Request Github repo data user
 
     @Override
     public void RequestRepository(Context context, int page) {
         View.ShowRequestProgress();
-
         Interactor.getData(context, this,page);
           //  View.noNetworkConnectivity();
-
     }
 
 

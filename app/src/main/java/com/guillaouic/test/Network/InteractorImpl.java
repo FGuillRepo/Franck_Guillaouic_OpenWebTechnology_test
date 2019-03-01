@@ -7,6 +7,11 @@ import java.util.List;
 
 import com.guillaouic.test.Model.Repository;
 import com.guillaouic.test.RetroFit.RetroFitClient;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,30 +27,39 @@ public class InteractorImpl implements Interactor {
 
     @Override
     public void getData(final Context context, final OnRequestFinishedListener listener, int page) {
-        Log.d("page",String.valueOf(page));
+        Log.d("page", String.valueOf(page));
         this.listener = listener;
-        Call<List<Repository>> call = new RetroFitClient().getRetroFitService(context).getRepository(page);
-        call.enqueue(new Callback<List<Repository>>() {
-            @Override
-            public void onResponse(Call<List<Repository>> call, Response<List<Repository>> response) {
-                List<Repository>  repositoryList= response.body();
-                try {
-                    for (Repository repo : repositoryList){
-                        repositoryAdapter.add(repo);
+        Observable<List<Repository>> call = new RetroFitClient().getRetroFitService(context).getRepository(page);
+
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<List<Repository>>() {
+
+                    @Override
+                    public void onNext(List<Repository> response) {
+                        try {
+                            for (Repository repo : response) {
+                                repositoryAdapter.add(repo);
+                            }
+
+                        } catch (NullPointerException e) {
+                            listener.onError();
+                        }
+
+                        listener.onSuccess();
                     }
 
-                }catch (NullPointerException e){
-                }
+                    @Override
+                    public void onError(Throwable e) {
+                        listener.onError();
+                    }
 
-                listener.onSuccess();
-            }
+                    @Override
+                    public void onComplete() {
 
-            @Override
-            public void onFailure(Call<List<Repository>> call, Throwable t) {
-                listener.onError();
-            }
+                    }
+                });
 
-        });
     }
 }
 

@@ -12,6 +12,8 @@
     <string name="dialog_network_message">No network connectivity,\n connect to a network and retry.</string>
     <string name="dialog_network_title">Connectivity</string>
 
+    <!-- Screen name-->
+    <string name="screen_information">Information</string>
 
 
 </resources>
