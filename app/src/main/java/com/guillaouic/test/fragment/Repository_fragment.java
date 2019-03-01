@@ -27,6 +27,7 @@ import butterknife.ButterKnife;
 import com.guillaouic.test.Model.Repository;
 import com.guillaouic.test.Network.RequestPresenter;
 import com.guillaouic.test.Network.RequestView;
+import com.guillaouic.test.Utils.Utils;
 import com.guillaouic.test.activity.RepositoryDetailActivity;
 
 import instagallery.app.com.gallery.R;
@@ -34,7 +35,7 @@ import instagallery.app.com.gallery.R;
 import com.guillaouic.test.adapter.RepositoryAdapter;
 
 
-public class Repository_fragment extends Fragment implements RequestView, RepositoryAdapter.OnItemRepoClickListener {
+public class Repository_fragment extends Fragment implements RequestView, RepositoryAdapter.OnItemRepoClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private int currentPage = 1;
     private View inflate;
@@ -70,6 +71,7 @@ public class Repository_fragment extends Fragment implements RequestView, Reposi
         ButterKnife.bind(this, inflate);
         title_toolbar.setText(getString(R.string.app_name));
         onItemRepoClickListener = this;
+        swipeContainer.setOnRefreshListener(this);
         animation_nonetwork.getIndeterminateDrawable().setColorFilter(getActivity().getResources().getColor(R.color.blue), PorterDuff.Mode.SRC_IN);
         ShowLoading();
 
@@ -119,6 +121,7 @@ public class Repository_fragment extends Fragment implements RequestView, Reposi
         repositoryAdapter.notifyDataSetChanged();
         HideNetworkView();
         repositoryAdapter.setLoaded();
+        swipeContainer.setRefreshing(false);
     }
 
 
@@ -166,5 +169,13 @@ public class Repository_fragment extends Fragment implements RequestView, Reposi
         bundle.putSerializable("repository", repository);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    @Override
+    public void onRefresh() {
+        if (Utils.isConnected(getActivity())){
+            mPresenter.RequestRepository(getActivity(), 1);
+            swipeContainer.setRefreshing(true);
+        }
     }
 }

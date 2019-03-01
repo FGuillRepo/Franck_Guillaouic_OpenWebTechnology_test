@@ -33,7 +33,6 @@ public class RetroFitClient {
                 .addNetworkInterceptor(provideCacheInterceptor())
                 .cache(provideCache());
 
-
         return new Retrofit.Builder()
                  .baseUrl(login_url.getBASE_URL())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
