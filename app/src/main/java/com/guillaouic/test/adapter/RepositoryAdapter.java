@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.PorterDuff;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +75,8 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         View view;
         switch (viewType) {
             case 0:
+                Log.d("page", "successs");
+
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_recycler_repositoryitem, parent, false);
                 return new TipsViewHolder(view);
 

@@ -27,7 +27,6 @@ public class InteractorImpl implements Interactor {
 
     @Override
     public void getData(final Context context, final OnRequestFinishedListener listener, int page) {
-        Log.d("page", String.valueOf(page));
         this.listener = listener;
         Observable<List<Repository>> call = new RetroFitClient().getRetroFitService(context).getRepository(page);
 
@@ -37,8 +36,11 @@ public class InteractorImpl implements Interactor {
 
                     @Override
                     public void onNext(List<Repository> response) {
+
                         try {
                             for (Repository repo : response) {
+                                Log.d("page", String.valueOf(page));
+                                Log.d("page", repo.getFullName());
                                 repositoryAdapter.add(repo);
                             }
 
