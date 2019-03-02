@@ -17,7 +17,8 @@ pipeline {
         sh './gradlew testDebugUnitTest testDebugUnitTest'
 
         // Analyse the test results and update the build result as appropriate
-        junit 'tests/results/*.xml'
+         sh 'ln -s tests/test-results-unit.xml $WORKSPACE'
+  		 junit "test-results-unit.xml"
         
       }
     }
