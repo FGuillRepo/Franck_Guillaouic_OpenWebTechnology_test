@@ -33,6 +33,7 @@ public class RepositoryDetailActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repositorydetail);
         ButterKnife.bind(this,this);
+
         title_toolbar.setText(getString(R.string.screen_information));
 
         if (savedInstanceState==null){
