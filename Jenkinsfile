@@ -1,34 +1,43 @@
-node {
-  // Mark the code checkout 'stage'....
-  stage 'Stage Checkout'
+pipeline {
+  agent {
+    // Run on a build agent where we have the Android SDK installed
+    label 'android'
+  }
+  options {
+    // Stop the build early in case of compile or test failures
+    skipStagesAfterUnstable()
+  }
+  stages {
+    stage('Compile') {
+      steps {
+        // Compile the app and its dependencies
+        sh './gradlew compileDebugSources'
+      }
+    }
+    stage('Unit test') {
+      steps {
+        // Compile and run the unit tests for the app and its dependencies
+        sh './gradlew testDebugUnitTest testDebugUnitTest'
 
-  // Checkout code from repository and update any submodules
-  checkout scm
-  sh 'git submodule update --init'  
+        // Analyse the test results and update the build result as appropriate
+        junit '**/TEST-*.xml'
+      }
+    }
+    stage('Build APK') {
+      steps {
+        // Finish building and packaging the APK
+        sh './gradlew assembleDebug'
 
-  stage 'Stage Build'
-
-  //branch name from Jenkins environment variables
-  echo "My branch is: ${env.BRANCH_NAME}"
-
-  def flavor = flavor(env.BRANCH_NAME)
-  echo "Building flavor ${flavor}"
-
-  //build your gradle flavor, passes the current build number as a parameter to gradle
-  sh "./gradlew clean assemble${flavor}Debug -PBUILD_NUMBER=${env.BUILD_NUMBER}"
-
-  stage 'Stage Archive'
-  //tell Jenkins to archive the apks
-  archiveArtifacts artifacts: 'app/build/outputs/apk/*.apk', fingerprint: true
-
-  stage 'Stage Upload To Fabric'
-  sh "./gradlew crashlyticsUploadDistribution${flavor}Debug  -PBUILD_NUMBER=${env.BUILD_NUMBER}"
-}
-
-// Pulls the android flavor out of the branch name the branch is prepended with /QA_
-@NonCPS
-def flavor(branchName) {
-  def matcher = (env.BRANCH_NAME =~ /QA_([a-z_]+)/)
-  assert matcher.matches()
-  matcher[0][1]
+        // Archive the APKs so that they can be downloaded from Jenkins
+        archiveArtifacts '**/*.apk'
+      }
+    }
+    stage('Static analysis') {
+      steps {
+        // Run Lint and analyse the results
+        sh './gradlew lintDebug'
+        androidLint pattern: '**/lint-results-*.xml'
+      }
+    }
+  }
 }
