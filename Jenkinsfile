@@ -1,22 +1,31 @@
-node('android') {
- 2    step([$class: 'StashNotifier'])
- 3    checkout scm
- 4    stage('Build') {
- 5      try {
- 6        sh './gradlew --refresh-dependencies clean assemble'
- 7        lock('emulator') {
- 8          sh './gradlew connectedCheck'
- 9        }
-10        currentBuild.result = 'SUCCESS'
-11      } catch(error) {
-12        slackSend channel: '#build-failures', color: 'bad', message: "This build is broken ${env.BUILD_URL}", token: 'XXXXXXXXXXX'
-13        currentBuild.result = 'FAILURE'
-14      } finally {
-15        junit '**/test-results/**/*.xml'
-16      }
-17    }
-18    stage('Archive') {
-19      archiveArtifacts 'app/build/outputs/apk/*'
-20    }
-21    step([$class: 'StashNotifier'])
-22}
+node {
+  // Mark the code checkout 'stage'....
+  stage 'Stage Checkout'
+
+  // Checkout code from repository and update any submodules
+  checkout scm
+  sh 'git submodule update --init'  
+
+  stage 'Stage Build'
+
+  //branch name from Jenkins environment variables
+  echo "My branch is: ${env.BRANCH_NAME}"
+
+  def flavor = flavor(env.BRANCH_NAME)
+  echo "Building flavor ${flavor}"
+
+  //build your gradle flavor, passes the current build number as a parameter to gradle
+  sh "./gradlew clean assemble${flavor}Debug -PBUILD_NUMBER=${env.BUILD_NUMBER}"
+
+  stage 'Stage Archive'
+  //tell Jenkins to archive the apks
+  archiveArtifacts artifacts: 'app/build/outputs/apk/*.apk', fingerprint: true
+}
+
+// Pulls the android flavor out of the branch name the branch is prepended with /QA_
+@NonCPS
+def flavor(branchName) {
+  def matcher = (env.BRANCH_NAME =~ /QA_([a-z_]+)/)
+  assert matcher.matches()
+  matcher[0][1]
+}
