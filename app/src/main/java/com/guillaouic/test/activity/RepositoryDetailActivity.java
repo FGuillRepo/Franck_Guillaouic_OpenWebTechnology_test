@@ -45,7 +45,7 @@ public class RepositoryDetailActivity extends Activity {
                 setInformation(title,repository.getName());
                 setInformation(description,String.valueOf(repository.getDescription()));
                 setInformation(login,repository.getOwner().getLogin());
-                setInformation(updatedate,repository.getUpdatedAt());
+                setInformation(updatedate,repository.getOwner().getLogin());
             }
         }
 
