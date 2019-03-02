@@ -5,6 +5,7 @@ pipeline {
     skipStagesAfterUnstable()
   }
   stages {
+  	
     stage('Compile') {
       steps {
         // Compile the app and its dependencies
@@ -17,7 +18,7 @@ pipeline {
         sh './gradlew testDebugUnitTest testDebugUnitTest'
 
         // Analyse the test results and update the build result as appropriate
-        junit 'file:///Users/Moi/AndroidstudioProjects/Franck_Guillaouic_Scout24Testv2/app/build/reports/test.xml'
+        junit '**/reports/test-*.xml'
 
       }
     }
