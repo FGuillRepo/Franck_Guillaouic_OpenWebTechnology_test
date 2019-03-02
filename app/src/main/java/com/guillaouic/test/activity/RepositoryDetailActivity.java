@@ -49,6 +49,7 @@ public class RepositoryDetailActivity extends Activity {
             }
         }
 
+
         buttonClose = RxView.clicks(close).subscribe(new Action1<Void>() {
             @Override
             public void call(Void aVoid) {
