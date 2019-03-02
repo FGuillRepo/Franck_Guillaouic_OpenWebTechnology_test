@@ -92,4 +92,5 @@ public class RepositoryDetailActivity extends Activity {
             buttonClose.unsubscribe();
         }
     }
+
 }
