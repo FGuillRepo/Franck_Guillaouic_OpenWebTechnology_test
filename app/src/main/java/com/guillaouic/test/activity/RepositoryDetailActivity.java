@@ -56,6 +56,7 @@ public class RepositoryDetailActivity extends Activity {
                 RepositoryDetailActivity.this.onBackPressed();
             }
         });
+
     }
 
 
