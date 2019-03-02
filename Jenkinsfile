@@ -18,7 +18,7 @@ pipeline {
         sh './gradlew testDebugUnitTest testDebugUnitTest'
 
         // Analyse the test results and update the build result as appropriate
-        junit '**/reports/test-*.xml'
+      //  junit '**/reports/test-*.xml'
 
       }
     }
