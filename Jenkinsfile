@@ -1,4 +1,4 @@
-node('android') {
+node {
   options {
     // Stop the build early in case of compile or test failures
     skipStagesAfterUnstable()
