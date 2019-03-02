@@ -18,7 +18,7 @@ pipeline {
         sh './gradlew testDebugUnitTest testDebugUnitTest'
 
         // Analyse the test results and update the build result as appropriate
-      //  junit '**/reports/test-*.xml'
+        junit '**/reports/test-*.xml'
 
       }
     }
@@ -37,6 +37,18 @@ pipeline {
         sh './gradlew lintDebug'
         androidLint pattern: '**/lint-results-*.xml'
       }
+       post {
+        success {
+          // Notify if the upload succeeded
+          mail to: 'GUILLA.LAB@gmail.com', subject: 'Jenkins Application', body: 'Successfull build'
+        }
+      }
+    }
+  }
+   post {
+    failure {
+      // Notify developer team of the failure
+      mail to: 'GUILLA.LAB@gmail.com', subject: 'Jenkins Application', body: 'Failed build'
     }
   }
 }
