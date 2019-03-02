@@ -57,7 +57,6 @@ public class RepositoryDetailActivity extends Activity {
         });
     }
 
-    
 
     private void setInformation (TextView textView, String text){
         textView.setText(text);
