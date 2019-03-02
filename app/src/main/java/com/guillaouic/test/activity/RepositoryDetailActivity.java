@@ -48,7 +48,7 @@ public class RepositoryDetailActivity extends Activity {
                 setInformation(updatedate,repository.getUpdatedAt());
             }
         }
-        
+
         buttonClose = RxView.clicks(close).subscribe(new Action1<Void>() {
             @Override
             public void call(Void aVoid) {
@@ -57,6 +57,7 @@ public class RepositoryDetailActivity extends Activity {
         });
     }
 
+    
 
     private void setInformation (TextView textView, String text){
         textView.setText(text);
