@@ -2,7 +2,7 @@
     <string name="app_name">Guillaouic Franck Scout24 Test </string>
 
     <!-- Authentication -->
-    <string name="auth_base_url">https://api.github.com/</string>
+    <string name="auth_base_url">https://www.googleapis.com</string>
     <string name="auth_error">An error occured, please retry</string>
 
 
@@ -14,6 +14,7 @@
 
     <!-- Screen name-->
     <string name="screen_information">Information</string>
+    <string name="searchhashtag">Search a hashtag</string>
 
 
 </resources>

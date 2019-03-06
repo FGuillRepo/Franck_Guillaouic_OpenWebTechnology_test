@@ -7,13 +7,14 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 
-import instagallery.app.com.gallery.R;
-
+import com.guillaouic.test.fragment.History_fragment;
 import com.guillaouic.test.fragment.Search_fragment;
 import com.guillaouic.test.utils.ActivityUtils;
 
+import instagallery.app.com.gallery.R;
 
-public class RepositoryActivity extends AppCompatActivity implements View.OnClickListener{
+
+public class HistoryActivity extends AppCompatActivity implements View.OnClickListener{
 
 
     @Override
@@ -25,9 +26,8 @@ public class RepositoryActivity extends AppCompatActivity implements View.OnClic
 
             ActivityUtils.addFragmentToActivity(
                     getSupportFragmentManager(),R.id.container_fragment,
-                    Search_fragment.newInstance(),
-                    "Search_fragment");
-
+                    History_fragment.newInstance(),
+                    "History_fragment");
         }
     }
 

@@ -7,11 +7,11 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.guillaouic.test.model.bookModel.Item;
 import com.jakewharton.rxbinding.view.RxView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.guillaouic.test.Model.Repository;
 import instagallery.app.com.gallery.R;
 import rx.Subscription;
 import rx.functions.Action1;
@@ -40,11 +40,11 @@ public class RepositoryDetailActivity extends Activity {
             Bundle bundle= intent.getExtras();
 
             if (bundle!=null){
-                Repository repository = (Repository) bundle.getSerializable("repository");
-                setInformation(title,repository.getName());
-                setInformation(description,String.valueOf(repository.getDescription()));
-                setInformation(login,repository.getOwner().getLogin());
-                setInformation(updatedate,repository.getUpdatedAt());
+                Item repository = (Item) bundle.getSerializable("repository");
+                setInformation(title,repository.getKind());
+                setInformation(description,String.valueOf(repository.getEtag()));
+                setInformation(login,repository.getKind());
+                setInformation(updatedate,repository.getKind());
             }
         }
 

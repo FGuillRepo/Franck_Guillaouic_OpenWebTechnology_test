@@ -38,6 +38,10 @@
 
         </activity>
 
+        <activity android:name="com.guillaouic.test.activity.HistoryActivity">
+
+        </activity>
+
     </application>
 
 </manifest>

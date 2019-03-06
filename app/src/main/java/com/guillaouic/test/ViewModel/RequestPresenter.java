@@ -1,8 +1,6 @@
-package com.guillaouic.test.Network;
+package com.guillaouic.test.ViewModel;
 
 import android.content.Context;
-
-import com.guillaouic.test.Utils.Utils;
 
 /**
  *
@@ -22,12 +20,18 @@ public class RequestPresenter implements Presenter, Interactor.OnRequestFinished
     // Request Github repo data user
 
     @Override
-    public void RequestRepository(Context context, int page) {
+    public void RequestBooks_NetworkData(Context context, String title) {
         View.ShowRequestProgress();
-        Interactor.getData(context, this,page);
+        Interactor.getData_Network(context, this,title);
           //  View.noNetworkConnectivity();
     }
 
+    @Override
+    public void RequestBooks_Database(Context context) {
+        View.ShowRequestProgress();
+        Interactor.GetData_Database(context,this);
+        //  View.noNetworkConnectivity();
+    }
 
     @Override public void onDestroy() {
         View = null;

@@ -1,4 +1,4 @@
-package com.guillaouic.test.Network;
+package com.guillaouic.test.ViewModel;
 
 public interface RequestView {
     void ShowRequestProgress();
