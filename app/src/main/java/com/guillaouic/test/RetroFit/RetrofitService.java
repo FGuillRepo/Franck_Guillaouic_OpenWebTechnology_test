@@ -1,6 +1,8 @@
 package com.guillaouic.test.RetroFit;
 
 
+import android.databinding.ObservableField;
+
 import com.guillaouic.test.model.bookModel.Book;
 
 import io.reactivex.Observable;

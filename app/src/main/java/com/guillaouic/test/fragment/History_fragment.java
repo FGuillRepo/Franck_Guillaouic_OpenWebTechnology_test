@@ -12,17 +12,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.guillaouic.test.ViewModel.RequestPresenter;
 import com.guillaouic.test.ViewModel.RequestView;
 import com.guillaouic.test.activity.RepositoryDetailActivity;
+import com.guillaouic.test.adapter.HistoryClickCallback;
 import com.guillaouic.test.adapter.RepositoryAdapter;
 import com.guillaouic.test.model.bookModel.Item;
 import com.guillaouic.test.utils.Utils;
@@ -34,10 +31,9 @@ import butterknife.ButterKnife;
 import instagallery.app.com.gallery.R;
 
 
-public class History_fragment extends Fragment implements RequestView, RepositoryAdapter.OnItemRepoClickListener, SwipeRefreshLayout.OnRefreshListener {
+/*public class History_fragment extends Fragment implements RequestView, SwipeRefreshLayout.OnRefreshListener {
 
     private View inflate;
-    private RepositoryAdapter.OnItemRepoClickListener onItemRepoClickListener;
     public static RepositoryAdapter HistoryAdapter;
     private  ArrayList<Item> repositoryList = new ArrayList<>();
     private RequestPresenter mPresenter;
@@ -66,7 +62,6 @@ public class History_fragment extends Fragment implements RequestView, Repositor
         inflate = inflater.inflate(R.layout.fragment_history, container, false);
         ButterKnife.bind(this, inflate);
         swipeContainer.setOnRefreshListener(this);
-        onItemRepoClickListener = this;
         Setup();
 
         mPresenter = new RequestPresenter(this);
@@ -81,13 +76,11 @@ public class History_fragment extends Fragment implements RequestView, Repositor
                 = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerview.setLayoutManager(layoutManager);
         recyclerview.setItemAnimator(new DefaultItemAnimator());
-        HistoryAdapter = new RepositoryAdapter(getActivity(), repositoryList, recyclerview, onItemRepoClickListener);
+        HistoryAdapter = new RepositoryAdapter(getActivity(),mCommentClickCallback);
         recyclerview.setAdapter(HistoryAdapter);
     }
 
-    /*
-     *   Callback presenter network data call
-     */
+
 
     @Override
     public void RequestSuccess() {
@@ -128,14 +121,6 @@ public class History_fragment extends Fragment implements RequestView, Repositor
         reconnect.setVisibility(View.INVISIBLE);
     }
 
-    @Override
-    public void RepoClickEvent(Item repository) {
-        Intent intent = new Intent(getActivity(), RepositoryDetailActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("repository", repository);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
 
     @Override
     public void onRefresh() {
@@ -145,4 +130,12 @@ public class History_fragment extends Fragment implements RequestView, Repositor
         }
     }
 
-}
+    private final HistoryClickCallback mCommentClickCallback = new HistoryClickCallback() {
+        @Override
+        public void onClick() {
+            Intent intent = new Intent(getActivity(), RepositoryDetailActivity.class);
+            startActivity(intent);
+
+        }
+    };
+}*/

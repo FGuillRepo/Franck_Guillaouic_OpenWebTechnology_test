@@ -29,7 +29,7 @@ public class RequestPresenter implements Presenter, Interactor.OnRequestFinished
     @Override
     public void RequestBooks_Database(Context context) {
         View.ShowRequestProgress();
-        Interactor.GetData_Database(context,this);
+       // Interactor.GetData_Database(context,this);
         //  View.noNetworkConnectivity();
     }
 

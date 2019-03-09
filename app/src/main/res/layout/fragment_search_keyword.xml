@@ -1,133 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+        <import type="android.view.View"/>
+
+        <variable name="isLoading" type="boolean" />
+        <variable name="model" type="com.guillaouic.test.livedataviewmodel.BookViewModel"/>
+        <variable name="callback" type="com.guillaouic.test.adapter.SearchClickCallback"/>
+        <variable name="callbackhistory" type="com.guillaouic.test.adapter.HistoryClickCallback"/>
+
+
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
-
-    <android.support.v4.widget.SwipeRefreshLayout
+        <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipeContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/linear_slide">
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.Toolbar
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/blue"
+                        android:id="@+id/toolbar">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:id="@+id/title_toolbar"
+                            android:textColor="@color/white"
+                            tools:text="" />
+
+
+                    </android.support.v7.widget.Toolbar>
+
+                    <Button
+                        android:id="@+id/history_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:gravity="right"
+                        android:onClick="@{() ->  callbackhistory.onClick()}"
+                        android:text="Button" />
+
+                </RelativeLayout>
+
+
+
+                <LinearLayout
+                    android:id="@+id/frame_expand"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#FFF2F2F2"
+                    android:orientation="vertical"
+                    android:weightSum="3">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="2">
+
+                        <EditText
+                            android:id="@+id/search_editText"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.5"
+                            android:allowUndo="true"
+                            android:text="@{model.title}"
+                            android:hint="@string/searchhashtag"
+                            android:addTextChangedListener="@{model.watcher}"/>
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_weight="0.5"
+                            android:layout_margin="5dp"
+                            android:layout_height="match_parent"
+                            android:id="@+id/search_button"
+                            android:onClick="@{() ->  callback.onClick(model.getSearch())}"
+                            android:src="@drawable/ic_close" />
+                    </LinearLayout>
+
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="2.7"
+                        android:background="@color/white">
+
+                    </android.support.v7.widget.RecyclerView>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
         <LinearLayout
+            android:id="@+id/no_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            >
+            android:visibility="invisible"
+            android:weightSum="3">
 
-            <include layout="@layout/view_toolbar">
-            </include>
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"></View>
 
             <LinearLayout
-                android:id="@+id/frame_expand"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#FFF2F2F2"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:orientation="vertical"
                 android:weightSum="3">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:orientation="vertical"
                     android:weightSum="2">
 
-                    <EditText
-                        android:id="@+id/search_editText"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.5"
-                        android:allowUndo="true"
-                        android:hint="@string/searchhashtag" />
-
                     <ImageView
-                        android:layout_width="0dp"
-                        android:layout_weight="0.5"
-                        android:layout_margin="5dp"
-                        android:layout_height="match_parent"
-                        android:id="@+id/search_button"
-                        android:src="@drawable/ic_close"
-                     />
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1.7" />
                 </LinearLayout>
 
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerview"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="2.7"
-                    android:background="@color/white">
-
-                </android.support.v7.widget.RecyclerView>
-
-            </LinearLayout>
-
-
-
-        </LinearLayout>
-
-
-        </android.support.v4.widget.SwipeRefreshLayout>
-
-    <LinearLayout
-        android:id="@+id/no_item"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="invisible"
-        android:weightSum="3">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"></View>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:weightSum="3">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:weightSum="2">
-
-                <ImageView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:layout_weight="1.7" />
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="no data"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/textsize16" />
             </LinearLayout>
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="no data"
-                android:textColor="@color/blue"
-                android:textSize="@dimen/textsize16" />
         </LinearLayout>
 
-
-    </LinearLayout>
-
-    <RelativeLayout
+        <RelativeLayout
             android:id="@+id/frame_nonetwork"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -135,14 +182,14 @@
             android:layout_margin="20dp"
             android:visibility="invisible">
 
-        <ProgressBar
-            android:id="@+id/animation_nonetwork"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:indeterminate="true"
-            android:indeterminateOnly="true"
-            android:visibility="invisible" />
+            <ProgressBar
+                android:id="@+id/animation_nonetwork"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:indeterminate="true"
+                android:indeterminateOnly="true"
+                android:visibility="invisible" />
 
 
             <LinearLayout
@@ -177,5 +224,6 @@
             </LinearLayout>
 
 
-    </RelativeLayout>
+        </RelativeLayout>
     </android.support.design.widget.CoordinatorLayout>
+</layout>

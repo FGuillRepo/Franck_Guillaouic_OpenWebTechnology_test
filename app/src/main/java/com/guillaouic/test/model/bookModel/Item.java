@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.guillaouic.test.database.NestedVolumeConverter;
+import com.guillaouic.test.database.converter.NestedVolumeConverter;
 
 @Entity(tableName = "item")
 public class Item implements Serializable

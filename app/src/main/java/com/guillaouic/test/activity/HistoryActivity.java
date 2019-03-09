@@ -7,7 +7,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 
-import com.guillaouic.test.fragment.History_fragment;
+import com.guillaouic.test.fragment.History_fragment2;
 import com.guillaouic.test.fragment.Search_fragment;
 import com.guillaouic.test.utils.ActivityUtils;
 
@@ -26,8 +26,8 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
 
             ActivityUtils.addFragmentToActivity(
                     getSupportFragmentManager(),R.id.container_fragment,
-                    History_fragment.newInstance(),
-                    "History_fragment");
+                    History_fragment2.newInstance(),
+                    "History_fragment2");
         }
     }
 

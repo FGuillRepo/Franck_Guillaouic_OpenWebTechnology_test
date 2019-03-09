@@ -1,5 +1,6 @@
 package com.guillaouic.test.database;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -13,13 +14,10 @@ import java.util.List;
 
 @Dao
  public interface DaoAccess {
- 
- @Insert
- void insertBook (Book movies);
- @Query ("SELECT * FROM book_model")
-List<Book> fetchListBooks();
+
+
  @Update
- void updateMovie (Book movies);
- @Delete
- void deleteMovie (Book movies);
+ void insertBook (Book book);
+ @Query ("SELECT * FROM book_model")
+ LiveData<List<Book>> fetchListBooks();
  }

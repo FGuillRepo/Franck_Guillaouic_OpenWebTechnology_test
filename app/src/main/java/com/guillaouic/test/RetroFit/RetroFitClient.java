@@ -29,4 +29,18 @@ public class RetroFitClient {
         return retrofit.create(com.guillaouic.test.RetroFit.RetrofitService.class);
     }
 
+    public  Retrofit createRetroFi() {
+        return new Retrofit.Builder()
+                .baseUrl("https://www.googleapis.com")
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
+
+
+    public  RetrofitService getRetroFitServic() {
+        final Retrofit retrofit = createRetroFi();
+        return retrofit.create(com.guillaouic.test.RetroFit.RetrofitService.class);
+    }
+
 }

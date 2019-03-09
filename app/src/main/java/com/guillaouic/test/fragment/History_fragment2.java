@@ -2,8 +2,6 @@ package com.guillaouic.test.fragment;
 
 
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,21 +9,19 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.guillaouic.test.activity.DetailsActivity;
-import com.guillaouic.test.adapter.HistoryClickCallback;
-import com.guillaouic.test.adapter.RecyclerViewClickCallback;
-import com.guillaouic.test.livedataviewmodel.BookViewModel;
+import com.guillaouic.test.Application;
 import com.guillaouic.test.ViewModel.RequestView;
+import com.guillaouic.test.adapter.RepositoryAdapter;
+import com.guillaouic.test.database.Database;
+import com.guillaouic.test.livedataviewmodel.BookViewModel;
 import com.guillaouic.test.model.bookModel.Book;
 import com.guillaouic.test.model.bookModel.Item;
+import com.guillaouic.test.utils.DatabaseInitializer;
 import com.guillaouic.test.utils.Utils;
-import com.guillaouic.test.activity.RepositoryDetailActivity;
-import com.guillaouic.test.adapter.RepositoryAdapter;
 
 import java.util.List;
 
@@ -33,15 +29,16 @@ import instagallery.app.com.gallery.R;
 import instagallery.app.com.gallery.databinding.FragmentSearchKeywordBinding;
 
 
-public class Search_fragment extends Fragment implements RequestView, SwipeRefreshLayout.OnRefreshListener {
+public class History_fragment2 extends Fragment implements RequestView, SwipeRefreshLayout.OnRefreshListener {
 
-    private RepositoryAdapter repositoryAdapter;
-    private BookViewModel bookViewModel;
+    public static RepositoryAdapter repositoryAdapter;
+    private BookViewModel mainActivityViewModel;
     private FragmentSearchKeywordBinding mBinding;
 
 
-    public static Search_fragment newInstance() {
-        Search_fragment myFragment = new Search_fragment();
+
+    public static History_fragment2 newInstance() {
+        History_fragment2 myFragment = new History_fragment2();
         Bundle args = new Bundle();
         myFragment.setArguments(args);
         return myFragment;
@@ -51,20 +48,21 @@ public class Search_fragment extends Fragment implements RequestView, SwipeRefre
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_keyword, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_history, container, false);
+        Setup();
+
         return mBinding.getRoot();
+
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        bookViewModel = ViewModelProviders.of(this).get(BookViewModel.class);
-        mBinding.setModel(bookViewModel);
-        mBinding.setCallback(bookViewModel.mSearchClickCallback);
-        mBinding.setCallbackhistory(bookViewModel.mHistoryClickCallBack);
-        subscribeToModel(bookViewModel);
-        Setup();
+        mainActivityViewModel = new BookViewModel(Application.getApplication());
+        mBinding.setModel(mainActivityViewModel);
+        subscribeToModel(mainActivityViewModel);
+        DatabaseInitializer.RetrieveAsync(Database.getInstance(getActivity()),getActivity());
 
     }
 
@@ -85,7 +83,7 @@ public class Search_fragment extends Fragment implements RequestView, SwipeRefre
                 = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mBinding.recyclerview.setLayoutManager(layoutManager);
         mBinding.recyclerview.setItemAnimator(new DefaultItemAnimator());
-        repositoryAdapter = new RepositoryAdapter(getActivity(),bookViewModel.recyclerViewClickCallback);
+        repositoryAdapter = new RepositoryAdapter(getActivity(),null);
         mBinding.recyclerview.setAdapter(repositoryAdapter);
     }
 
@@ -141,17 +139,6 @@ public class Search_fragment extends Fragment implements RequestView, SwipeRefre
     }
 
 
-
-
-    private final HistoryClickCallback mHistoryClickCallBack = new HistoryClickCallback() {
-        @Override
-        public void onClick() {
-            Log.d("tagclick","clickos");
-            Intent intent = new Intent(getActivity(), RepositoryDetailActivity.class);
-            startActivity(intent);
-
-        }
-    };
 
 
 }

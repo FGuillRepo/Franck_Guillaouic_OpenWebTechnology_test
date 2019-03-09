@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.guillaouic.test.database.NestedItemConverter;
+import com.guillaouic.test.database.converter.NestedItemConverter;
 
 @Entity(tableName = "book_model")
 public class Book implements Serializable

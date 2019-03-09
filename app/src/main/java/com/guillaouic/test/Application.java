@@ -3,17 +3,21 @@ package com.guillaouic.test;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.guillaouic.test.database.Database;
+
 
 public class Application extends android.app.Application {
 
+    private AppExecutors mAppExecutors;
 
     public static Application application;
-    private static Context context;
+    public static Context context;
     @Override
     protected void attachBaseContext(Context context) {
         super.attachBaseContext(context);
         MultiDex.install(this);
         setContext(context);
+        mAppExecutors = new AppExecutors();
     }
 
     @Override
@@ -22,13 +26,26 @@ public class Application extends android.app.Application {
         context = getApplicationContext();
     }
 
+
+    public Database getDatabase() {
+        return Database.getInstance(this);
+    }
+
+    public DataRepository getRepository() {
+        return DataRepository.getInstance(getDatabase());
+    }
+
     public static void setContext(Context context) {
         Application.context = context;
     }
 
-    public static Context getContext(Context context)
+    public Context getContext()
     {
-        return Application.context;
+        return context;
+    }
+
+    public static void setApplication(Application application) {
+        Application.application = application;
     }
 
     public static synchronized Application getApplication() {

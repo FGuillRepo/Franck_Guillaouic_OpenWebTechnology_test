@@ -1,47 +1,43 @@
 package com.guillaouic.test.fragment;
 
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
+import android.arch.lifecycle.LiveData;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.guillaouic.test.activity.DetailsActivity;
-import com.guillaouic.test.adapter.HistoryClickCallback;
-import com.guillaouic.test.adapter.RecyclerViewClickCallback;
+import com.guillaouic.test.Application;
+import com.guillaouic.test.ViewModel.InteractorImpl;
+import com.guillaouic.test.adapter.RepositoryAdapter;
+import com.guillaouic.test.database.Database;
 import com.guillaouic.test.livedataviewmodel.BookViewModel;
-import com.guillaouic.test.ViewModel.RequestView;
 import com.guillaouic.test.model.bookModel.Book;
 import com.guillaouic.test.model.bookModel.Item;
-import com.guillaouic.test.utils.Utils;
-import com.guillaouic.test.activity.RepositoryDetailActivity;
-import com.guillaouic.test.adapter.RepositoryAdapter;
+import com.guillaouic.test.utils.DatabaseInitializer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import instagallery.app.com.gallery.R;
-import instagallery.app.com.gallery.databinding.FragmentSearchKeywordBinding;
+import instagallery.app.com.gallery.databinding.RowRecyclerLayoutitemBinding;
 
 
-public class Search_fragment extends Fragment implements RequestView, SwipeRefreshLayout.OnRefreshListener {
+public class Details_fragment extends Fragment {
 
-    private RepositoryAdapter repositoryAdapter;
-    private BookViewModel bookViewModel;
-    private FragmentSearchKeywordBinding mBinding;
+    public static RepositoryAdapter repositoryAdapter;
+    private BookViewModel mainActivityViewModel;
+    Item repository;
+    RowRecyclerLayoutitemBinding mBinding;
 
-
-    public static Search_fragment newInstance() {
-        Search_fragment myFragment = new Search_fragment();
+    public static Details_fragment newInstance() {
+        Details_fragment myFragment = new Details_fragment();
         Bundle args = new Bundle();
         myFragment.setArguments(args);
         return myFragment;
@@ -51,57 +47,53 @@ public class Search_fragment extends Fragment implements RequestView, SwipeRefre
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_keyword, container, false);
+         mBinding = DataBindingUtil.inflate(inflater, R.layout.row_recycler_layoutitem, container, false);
         return mBinding.getRoot();
+
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        bookViewModel = ViewModelProviders.of(this).get(BookViewModel.class);
-        mBinding.setModel(bookViewModel);
-        mBinding.setCallback(bookViewModel.mSearchClickCallback);
-        mBinding.setCallbackhistory(bookViewModel.mHistoryClickCallBack);
-        subscribeToModel(bookViewModel);
-        Setup();
+        Intent intent= getActivity().getIntent();
+        Bundle bundle= intent.getExtras();
 
+        if (bundle!=null){
+            Item item = (Item) bundle.getSerializable("item");
+            Book book = (Book) bundle.getSerializable("book");
+            mBinding.setBook(item);
+
+        //   Database databasee= Database.getInstance(getActivity());
+        //    databasee.insertInDatabase(databasee,book);
+            DatabaseInitializer.populateAsync(Database.getInstance(getActivity()),book,getActivity());
+            Log.d("bookkkk",book.getKind());
+        }
     }
 
-
-    private void subscribeToModel(final BookViewModel model) {
-
-        model.getBookList().observe(this, new Observer<Book>() {
-            @Override
-            public void onChanged(@Nullable Book item) {
-                repositoryAdapter.setBookList(item.getItems());
-            }
-        });
-    }
-
-    public void Setup() {
+  /*  public void Setup() {
        // mBinding.title_toolbar.setText(getString(R.string.app_name));
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mBinding.recyclerview.setLayoutManager(layoutManager);
         mBinding.recyclerview.setItemAnimator(new DefaultItemAnimator());
-        repositoryAdapter = new RepositoryAdapter(getActivity(),bookViewModel.recyclerViewClickCallback);
+        repositoryAdapter = new RepositoryAdapter(getActivity(),null);
         mBinding.recyclerview.setAdapter(repositoryAdapter);
-    }
+    }*/
 
     /*
      *   Callback presenter network data call
      */
 
-    @Override
+   /* @Override
     public void RequestSuccess() {
         HideNetworkView();
         repositoryAdapter.notifyDataSetChanged();
         mBinding.swipeContainer.setRefreshing(false);
-    }
+    }*/
 
 
-    @Override
+   /* @Override
     public void ShowRequestProgress() {
 
     }
@@ -138,20 +130,9 @@ public class Search_fragment extends Fragment implements RequestView, SwipeRefre
         if (Utils.isConnected(getActivity())){
             mBinding.swipeContainer.setRefreshing(true);
         }
-    }
+    }*/
 
 
-
-
-    private final HistoryClickCallback mHistoryClickCallBack = new HistoryClickCallback() {
-        @Override
-        public void onClick() {
-            Log.d("tagclick","clickos");
-            Intent intent = new Intent(getActivity(), RepositoryDetailActivity.class);
-            startActivity(intent);
-
-        }
-    };
 
 
 }

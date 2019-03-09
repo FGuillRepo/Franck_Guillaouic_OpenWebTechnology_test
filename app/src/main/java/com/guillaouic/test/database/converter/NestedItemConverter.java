@@ -1,26 +1,25 @@
-package com.guillaouic.test.database;
+package com.guillaouic.test.database.converter;
 
 import android.arch.persistence.room.TypeConverter;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.guillaouic.test.model.bookModel.Item;
-import com.guillaouic.test.model.bookModel.VolumeInfo;
 
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class NestedVolumeConverter {
+public class NestedItemConverter {
     private static Gson gson = new Gson();
-    private static Type type = new TypeToken<VolumeInfo>(){}.getType();
+    private static Type type = new TypeToken<List<Item>>(){}.getType();
 
     @TypeConverter
-    public static VolumeInfo stringToNestedData(String json) {
+    public static List<Item> stringToNestedData(String json) {
         return gson.fromJson(json, type);
     }
 
     @TypeConverter
-    public static String nestedDataToString(VolumeInfo nestedData) {
+    public static String nestedDataToString(List<Item> nestedData) {
         return gson.toJson(nestedData, type);
     }
 }
