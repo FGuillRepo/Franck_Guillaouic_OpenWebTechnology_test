@@ -40,7 +40,7 @@ public class DataRepository {
         return data;
     }
 
-    public LiveData<List<Book>> loadBook() {
+    public List<Book> loadBook() {
         return mDatabase.getItemDAO().fetchListBooks();
     }
 

@@ -49,8 +49,7 @@ public class DatabaseInitializer {
         }
     }
 
-    static class GetBook extends AsyncTask<Void, Void, Void> {
-        private Book book;
+    public static class GetBook extends AsyncTask<Void, Void, Void> {
         private Database database;
         Context context;
         public GetBook(Database database,Context context){
@@ -59,16 +58,15 @@ public class DatabaseInitializer {
         }
         @Override
         protected Void doInBackground(Void... voids) {
-            LiveData<List<Book>> book = database.getItemDAO().fetchListBooks();
-            List<Item> items= new ArrayList<>();
+            List<Book> bookFeteched = database.getItemDAO().fetchListBooks();
+            Log.d("bookinsert","getBook");
 
-            if(book != null){
-                //Do whatever
-                for (Book repo : book.getValue()) {
-                    Log.d("bookinsert",repo.getKind());
-                    break;
-                }
+            //Do whatever
+            for (int i =0;i< bookFeteched.size();i++) {
+                Log.d("bookinsert",bookFeteched.get(i).getKind());
+                break;
             }
+
             return null;
         }
 

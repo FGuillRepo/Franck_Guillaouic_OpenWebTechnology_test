@@ -76,8 +76,6 @@ public class InteractorImpl implements Interactor {
 
 
 
-
-
        public class getDatabase extends AsyncTask<Void, Void, Void> {
             private Database database;
             public getDatabase(){
@@ -86,13 +84,16 @@ public class InteractorImpl implements Interactor {
             protected Void doInBackground(Void... voids) {
                 database = Database.getInstance(context);
                 //creating a task
-                LiveData<List<Book>> book = database.getItemDAO().fetchListBooks();
-                List<Item> items= new ArrayList<>();
+                List<Book> bookFeteched = database.getItemDAO().fetchListBooks();
 
-                for (Book repo : book.getValue()) {
+                //Do whatever
+                for (int i =0;i< bookFeteched.size();i++) {
+                    Log.d("bookinsert",bookFeteched.get(i).getKind());
                     break;
                 }
-               // data.postValue(book);
+
+
+                // data.postValue(book);
 
                 return null;
             }

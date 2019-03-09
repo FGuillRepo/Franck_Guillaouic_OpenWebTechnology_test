@@ -109,8 +109,6 @@ public class BookViewModel extends AndroidViewModel {
      *  Observer for Editext search
      * */
 
-
-
     public TextWatcher watcher = new TextWatcherAdapter() {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @Override public void afterTextChanged(Editable s) {

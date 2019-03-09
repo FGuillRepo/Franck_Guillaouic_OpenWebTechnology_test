@@ -1,14 +1,19 @@
 package com.guillaouic.test.fragment;
 
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,8 +36,8 @@ import instagallery.app.com.gallery.databinding.FragmentSearchKeywordBinding;
 
 public class History_fragment2 extends Fragment implements RequestView, SwipeRefreshLayout.OnRefreshListener {
 
-    public static RepositoryAdapter repositoryAdapter;
-    private BookViewModel mainActivityViewModel;
+    public  RepositoryAdapter repositoryAdapter;
+    private BookViewModel bookViewModel;
     private FragmentSearchKeywordBinding mBinding;
 
 
@@ -48,9 +53,7 @@ public class History_fragment2 extends Fragment implements RequestView, SwipeRef
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_history, container, false);
-        Setup();
-
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_keyword, container, false);
         return mBinding.getRoot();
 
     }
@@ -59,22 +62,24 @@ public class History_fragment2 extends Fragment implements RequestView, SwipeRef
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mainActivityViewModel = new BookViewModel(Application.getApplication());
-        mBinding.setModel(mainActivityViewModel);
-        subscribeToModel(mainActivityViewModel);
+        bookViewModel = ViewModelProviders.of(this).get(BookViewModel.class);
+        mBinding.setModel(bookViewModel);
+        mBinding.setCallbackhistory(bookViewModel.mHistoryClickCallBack);
+        subscribeToModel(bookViewModel);
+        Setup();
+      // bookViewModel.getbook_fromDatabase();
         DatabaseInitializer.RetrieveAsync(Database.getInstance(getActivity()),getActivity());
-
     }
 
 
     private void subscribeToModel(final BookViewModel model) {
 
-        model.getBookList().observe(this, new Observer<Book>() {
+      /*  model.getBookList().observe(this, new Observer<Book>() {
             @Override
             public void onChanged(@Nullable Book item) {
                 repositoryAdapter.setBookList(item.getItems());
             }
-        });
+        });*/
     }
 
     public void Setup() {

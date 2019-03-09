@@ -16,8 +16,8 @@ import java.util.List;
  public interface DaoAccess {
 
 
- @Update
+ @Insert
  void insertBook (Book book);
  @Query ("SELECT * FROM book_model")
- LiveData<List<Book>> fetchListBooks();
+ List<Book> fetchListBooks();
  }
