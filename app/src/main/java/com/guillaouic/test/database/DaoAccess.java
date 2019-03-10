@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
@@ -16,8 +17,10 @@ import java.util.List;
  public interface DaoAccess {
 
 
- @Insert
- void insertBook (Book book);
- @Query ("SELECT * FROM book_model")
- List<Book> fetchListBooks();
+ @Insert(onConflict = OnConflictStrategy.REPLACE)
+ void insertBook (Item book);
+ @Query ("SELECT * FROM item")
+ LiveData<List<Item>> fetchListBooks();
+ @Query("DELETE FROM item")
+ public void clearBooktable();
  }

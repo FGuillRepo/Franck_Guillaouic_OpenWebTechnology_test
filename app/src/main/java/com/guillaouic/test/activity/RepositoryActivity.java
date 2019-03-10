@@ -19,7 +19,7 @@ public class RepositoryActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_repository);
+        setContentView(R.layout.activity_book);
 
         if (savedInstanceState == null) {
 

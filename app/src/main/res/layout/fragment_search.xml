@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:bind="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <import type="android.view.View"/>
@@ -11,7 +8,6 @@
         <variable name="model" type="com.guillaouic.test.livedataviewmodel.BookViewModel"/>
         <variable name="callback" type="com.guillaouic.test.adapter.SearchClickCallback"/>
         <variable name="callbackhistory" type="com.guillaouic.test.adapter.HistoryClickCallback"/>
-
 
     </data>
 
@@ -38,22 +34,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <android.support.v7.widget.Toolbar
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/blue"
-                        android:id="@+id/toolbar">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:id="@+id/title_toolbar"
-                            android:textColor="@color/white"
-                            tools:text="" />
-
-
-                    </android.support.v7.widget.Toolbar>
+                    <include layout="@layout/view_toolbar"
+                        android:id="@+id/toolbarLayout"
+                        app:hasmodel="@{model}">
+                    </include>
 
                     <Button
                         android:id="@+id/history_button"
@@ -62,12 +46,11 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
-                        android:gravity="right"
+                        android:gravity="end"
                         android:onClick="@{() ->  callbackhistory.onClick()}"
-                        android:text="Button" />
+                        android:text="History" />
 
                 </RelativeLayout>
-
 
 
                 <LinearLayout
@@ -80,18 +63,25 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.3"
+                        android:background="@color/white"
                         android:weightSum="2">
 
                         <EditText
                             android:id="@+id/search_editText"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1.5"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginStart="5dp"
+                            android:paddingBottom="3dp"
                             android:allowUndo="true"
                             android:text="@{model.title}"
-                            android:hint="@string/searchhashtag"
+                            android:textSize="@dimen/textsize17"
+                            android:hint="@string/search_text"
                             android:addTextChangedListener="@{model.watcher}"/>
+
 
                         <ImageView
                             android:layout_width="0dp"
@@ -100,19 +90,38 @@
                             android:layout_height="match_parent"
                             android:id="@+id/search_button"
                             android:onClick="@{() ->  callback.onClick(model.getSearch())}"
-                            android:src="@drawable/ic_close" />
+                            android:src="@drawable/ic_search" />
                     </LinearLayout>
 
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recyclerview"
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_marginTop="2dp"
                         android:layout_weight="2.7"
                         android:background="@color/white">
 
-                    </android.support.v7.widget.RecyclerView>
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recyclerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="2dp"
+                            android:background="@color/white">
+
+                        </android.support.v7.widget.RecyclerView>
+
+                        <ProgressBar
+                            android:id="@+id/animation_nonetwork"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:indeterminate="true"
+                            android:indeterminateOnly="true"
+                            android:visibility="invisible" />
+
+
+                    </RelativeLayout>
+
+
 
                 </LinearLayout>
 
@@ -181,15 +190,6 @@
             android:layout_alignParentTop="true"
             android:layout_margin="20dp"
             android:visibility="invisible">
-
-            <ProgressBar
-                android:id="@+id/animation_nonetwork"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:indeterminate="true"
-                android:indeterminateOnly="true"
-                android:visibility="invisible" />
 
 
             <LinearLayout

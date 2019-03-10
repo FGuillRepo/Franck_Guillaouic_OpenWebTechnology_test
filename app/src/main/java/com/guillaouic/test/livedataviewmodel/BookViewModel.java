@@ -20,7 +20,6 @@ import android.util.Log;
 import com.guillaouic.test.DataRepository;
 import com.guillaouic.test.activity.DetailsActivity;
 import com.guillaouic.test.activity.HistoryActivity;
-import com.guillaouic.test.activity.RepositoryDetailActivity;
 import com.guillaouic.test.adapter.HistoryClickCallback;
 import com.guillaouic.test.adapter.RecyclerViewClickCallback;
 import com.guillaouic.test.adapter.SearchClickCallback;
@@ -35,10 +34,11 @@ import java.util.Objects;
 public class BookViewModel extends AndroidViewModel {
 
     private DataRepository repository;
-    public final ObservableField<String> search =  new ObservableField<>("");
+    private final ObservableField<String> search =  new ObservableField<>("");
     private String TAG = BookViewModel.class.getSimpleName();
     
     private LiveData<Book> ItemList;
+    private LiveData<List<Item>> ItemListDatabase;
 
     public BookViewModel(Application application){
         super(application);
@@ -47,7 +47,7 @@ public class BookViewModel extends AndroidViewModel {
     }
 
     /*
-     *  Observer called in Search_Fragment, listening for changes.
+     *  Observer called in Search_Fragment, listening for network call.
      * */
 
 
@@ -56,6 +56,22 @@ public class BookViewModel extends AndroidViewModel {
             ItemList = repository.getBook();
         }
         return ItemList;
+    }
+
+    /*
+     *  Observer called in History_Fragment, listening for database call.
+     * */
+
+    public LiveData<List<Item>> getBookListDatabase() {
+        if (ItemListDatabase == null) {
+            ItemListDatabase = repository.getData_database();
+        }
+        return ItemListDatabase;
+    }
+
+
+    public void GetBook_fromDatabase(){
+        repository.getBookDatabase();
     }
 
     public ObservableField<String> getTitle() {
@@ -67,10 +83,12 @@ public class BookViewModel extends AndroidViewModel {
     }
 
     public Book getBook() {
-        return ItemList.getValue();
+        return ItemList.getValue() ;
     }
 
-
+    public List<Item> getBookDatabase() {
+        return ItemListDatabase.getValue() ;
+    }
     /*
     *  OnClickListener Callback Search Button
     * */
@@ -91,7 +109,6 @@ public class BookViewModel extends AndroidViewModel {
             Intent intent = new Intent(getApplication(), DetailsActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("item", item);
-            bundle.putSerializable("book", getBook());
             intent.putExtras(bundle);
             getApplication().startActivity(intent);
         }
@@ -105,6 +122,8 @@ public class BookViewModel extends AndroidViewModel {
             getApplication().startActivity(intent);
         }
     };
+
+
     /*
      *  Observer for Editext search
      * */

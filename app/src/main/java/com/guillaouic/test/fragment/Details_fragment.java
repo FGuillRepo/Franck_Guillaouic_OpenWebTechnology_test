@@ -8,6 +8,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,16 +28,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import instagallery.app.com.gallery.R;
-import instagallery.app.com.gallery.databinding.RowRecyclerLayoutitemBinding;
+import instagallery.app.com.gallery.databinding.FragmentDetailBinding;
 
 
-public class Details_fragment extends Fragment {
+public class Details_fragment extends BookParentFragment {
 
-    public static RepositoryAdapter repositoryAdapter;
-    private BookViewModel mainActivityViewModel;
-    Item repository;
-    RowRecyclerLayoutitemBinding mBinding;
-
+    FragmentDetailBinding mBinding;
     public static Details_fragment newInstance() {
         Details_fragment myFragment = new Details_fragment();
         Bundle args = new Bundle();
@@ -47,92 +45,24 @@ public class Details_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-         mBinding = DataBindingUtil.inflate(inflater, R.layout.row_recycler_layoutitem, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false);
         return mBinding.getRoot();
-
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState == null) {
+           // Toolbar toolbar = mBinding.toolbar.;
+            Intent intent = getActivity().getIntent();
+            Bundle bundle = intent.getExtras();
 
-        Intent intent= getActivity().getIntent();
-        Bundle bundle= intent.getExtras();
-
-        if (bundle!=null){
-            Item item = (Item) bundle.getSerializable("item");
-            Book book = (Book) bundle.getSerializable("book");
-            mBinding.setBook(item);
-
-        //   Database databasee= Database.getInstance(getActivity());
-        //    databasee.insertInDatabase(databasee,book);
-            DatabaseInitializer.populateAsync(Database.getInstance(getActivity()),book,getActivity());
-            Log.d("bookkkk",book.getKind());
+            if (bundle != null) {
+                Item item = (Item) bundle.getSerializable("item");
+                mBinding.setBook(item);
+                DatabaseInitializer.populateAsync(Database.getInstance(getActivity()), item);
+            }
         }
     }
-
-  /*  public void Setup() {
-       // mBinding.title_toolbar.setText(getString(R.string.app_name));
-        LinearLayoutManager layoutManager
-                = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        mBinding.recyclerview.setLayoutManager(layoutManager);
-        mBinding.recyclerview.setItemAnimator(new DefaultItemAnimator());
-        repositoryAdapter = new RepositoryAdapter(getActivity(),null);
-        mBinding.recyclerview.setAdapter(repositoryAdapter);
-    }*/
-
-    /*
-     *   Callback presenter network data call
-     */
-
-   /* @Override
-    public void RequestSuccess() {
-        HideNetworkView();
-        repositoryAdapter.notifyDataSetChanged();
-        mBinding.swipeContainer.setRefreshing(false);
-    }*/
-
-
-   /* @Override
-    public void ShowRequestProgress() {
-
-    }
-
-    @Override
-    public void onError() {
-    }
-
-
-    @Override
-    public void noNetworkConnectivity() {
-        HideNetworkView();
-    }
-
-
-    public void ShowLoading() {
-        mBinding.frameExpand.setVisibility(View.INVISIBLE);
-        mBinding.frameNonetwork.setVisibility(View.VISIBLE);
-        mBinding.animationNonetwork.setVisibility(View.VISIBLE);
-        mBinding.reconnect.setVisibility(View.INVISIBLE);
-    }
-
-
-    public void HideNetworkView() {
-        mBinding.frameExpand.setVisibility(View.VISIBLE);
-        mBinding.frameNonetwork.setVisibility(View.INVISIBLE);
-        mBinding.animationNonetwork.setVisibility(View.INVISIBLE);
-        mBinding.reconnect.setVisibility(View.INVISIBLE);
-    }
-
-
-    @Override
-    public void onRefresh() {
-        if (Utils.isConnected(getActivity())){
-            mBinding.swipeContainer.setRefreshing(true);
-        }
-    }*/
-
-
-
 
 }

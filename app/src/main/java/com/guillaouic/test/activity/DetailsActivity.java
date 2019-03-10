@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.View;
 
 import com.guillaouic.test.fragment.Details_fragment;
-import com.guillaouic.test.fragment.History_fragment2;
 import com.guillaouic.test.utils.ActivityUtils;
 
 import instagallery.app.com.gallery.R;
@@ -20,7 +19,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_repository);
+        setContentView(R.layout.activity_book);
 
         if (savedInstanceState == null) {
 

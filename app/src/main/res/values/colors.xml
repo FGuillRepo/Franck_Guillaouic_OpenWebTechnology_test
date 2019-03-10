@@ -5,7 +5,7 @@
     <color name="colorPrimaryDark">#54b0e9</color>
     <color name="colorAccent">#54b0e9</color>
 
-    <item name="blue" type="color">#0176ac</item>
+    <item name="blue" type="color">#0e9cde</item>
     <item name="bluelight" type="color">#d7ebf2</item>
 
     <item name="white" type="color">#FFFFFFFF</item>

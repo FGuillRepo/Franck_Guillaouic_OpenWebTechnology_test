@@ -3,15 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="model" type="com.guillaouic.test.livedataviewmodel.BookViewModel"/>
+
+
+        <variable name="hasmodel" type="com.guillaouic.test.livedataviewmodel.BookViewModel"/>
         <variable name="callbackHistory" type="com.guillaouic.test.adapter.HistoryClickCallback"/>
     </data>
 
-
-    <RelativeLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
@@ -19,28 +16,34 @@
             android:background="@color/blue"
             android:id="@+id/toolbar">
 
+            <RelativeLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/back_button"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/ic_left_arrow" />
+
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:id="@+id/title_toolbar"
                 android:textColor="@color/white"
-                tools:text="" />
+                android:textStyle="bold"
+                android:textSize="@dimen/textsize21"
+                tools:text="title" />
 
-
+            </RelativeLayout>
         </android.support.v7.widget.Toolbar>
 
-        <Button
-            android:id="@+id/history_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:gravity="right"
-            android:onClick="@{() ->  callbackHistory.onClick()}"
-            android:text="Button" />
-
-
-    </RelativeLayout>
 </layout>

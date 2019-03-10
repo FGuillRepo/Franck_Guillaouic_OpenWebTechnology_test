@@ -14,7 +14,17 @@
 
     <!-- Screen name-->
     <string name="screen_information">Information</string>
-    <string name="searchhashtag">Search a hashtag</string>
+    <string name="screen_history">History</string>
+    <string name="screen_search">Search</string>
+    <string name="screen_detail">Detail</string>
+
+    <string name="search_text">Search a book title</string>
+
+
+
+    <string name="book_description">Description : %s</string>
+    <string name="book_language">Language : %s</string>
+
 
 
 </resources>

@@ -18,54 +18,26 @@ public class DatabaseInitializer {
 
     private static final String TAG = DatabaseInitializer.class.getName();
 
-    public static void populateAsync(@NonNull final Database db,Book book, Context context) {
-        InsertData task = new InsertData(db,book,context);
+
+
+    public static void populateAsync(@NonNull final Database db,Item book) {
+        InsertData task = new InsertData(db,book);
         task.execute();
     }
 
-    public static void RetrieveAsync(@NonNull final Database db, Context context) {
-        GetBook task = new GetBook(db,context);
-        task.execute();
-    }
 
     static class InsertData extends AsyncTask<Void, Void, Void> {
-        private Book book;
+        private Item book;
         private Database database;
-        Context context;
-        public InsertData(Database database,Book book,Context context){
+
+        public InsertData(Database database,Item book){
             this.book=book;
             this.database=database;
-            this.context=context;
         }
         @Override
         protected Void doInBackground(Void... voids) {
+         //   database.getItemDAO().clearBooktable();
             database.getItemDAO().insertBook(book);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-        }
-    }
-
-    public static class GetBook extends AsyncTask<Void, Void, Void> {
-        private Database database;
-        Context context;
-        public GetBook(Database database,Context context){
-            this.database=database;
-            this.context=context;
-        }
-        @Override
-        protected Void doInBackground(Void... voids) {
-            List<Book> bookFeteched = database.getItemDAO().fetchListBooks();
-            Log.d("bookinsert","getBook");
-
-            //Do whatever
-            for (int i =0;i< bookFeteched.size();i++) {
-                Log.d("bookinsert",bookFeteched.get(i).getKind());
-                break;
-            }
 
             return null;
         }
