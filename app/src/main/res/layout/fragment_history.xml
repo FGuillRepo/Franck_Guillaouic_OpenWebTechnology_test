@@ -8,9 +8,9 @@
         <import type="android.view.View"/>
 
         <variable name="isLoading" type="boolean" />
-        <variable name="model" type="com.guillaouic.test.livedataviewmodel.BookViewModel"/>
-        <variable name="callback" type="com.guillaouic.test.adapter.SearchClickCallback"/>
-        <variable name="callbackhistory" type="com.guillaouic.test.adapter.HistoryClickCallback"/>
+        <variable name="model" type="com.guillaouic.test.viewmodel.BookViewModel"/>
+        <variable name="callback" type="com.guillaouic.test.fragment.callback.SearchClickCallback"/>
+        <variable name="callbackhistory" type="com.guillaouic.test.fragment.callback.HistoryClickCallback"/>
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -32,8 +32,7 @@
                 android:orientation="vertical">
 
                 <include layout="@layout/view_toolbar"
-                    android:id="@+id/toolbarLayout"
-                    app:hasmodel="@{model}">
+                    android:id="@+id/toolbarLayout">
                 </include>
 
 

@@ -1,28 +1,27 @@
-package com.guillaouic.test.livedataviewmodel;
+package com.guillaouic.test.viewmodel;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.content.Context;
+import android.arch.lifecycle.MutableLiveData;
 import android.content.Intent;
+import android.databinding.Bindable;
 import android.databinding.ObservableField;
+import android.databinding.ObservableInt;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.view.View;
 
 
-import com.guillaouic.test.DataRepository;
+import com.guillaouic.test.repository.DataRepository;
 import com.guillaouic.test.activity.DetailsActivity;
 import com.guillaouic.test.activity.HistoryActivity;
-import com.guillaouic.test.adapter.HistoryClickCallback;
-import com.guillaouic.test.adapter.RecyclerViewClickCallback;
-import com.guillaouic.test.adapter.SearchClickCallback;
+import com.guillaouic.test.fragment.callback.HistoryClickCallback;
+import com.guillaouic.test.fragment.callback.RecyclerViewClickCallback;
+import com.guillaouic.test.fragment.callback.SearchClickCallback;
 import com.guillaouic.test.model.bookModel.Book;
 import com.guillaouic.test.model.bookModel.Item;
 import com.guillaouic.test.utils.TextWatcherAdapter;
@@ -30,26 +29,31 @@ import com.guillaouic.test.utils.TextWatcherAdapter;
 import java.util.List;
 import java.util.Objects;
 
+import instagallery.app.com.gallery.BR;
+
+
+/*
+ *  BookViewModel : Use to observe books lists, UI click callbacks and searchview.
+ * */
 
 public class BookViewModel extends AndroidViewModel {
 
     private DataRepository repository;
-    private final ObservableField<String> search =  new ObservableField<>("");
-    private String TAG = BookViewModel.class.getSimpleName();
-    
+
+    private final ObservableField<String> search = new ObservableField<>("");
+
     private LiveData<Book> ItemList;
     private LiveData<List<Item>> ItemListDatabase;
+    public ObservableInt loading;
 
-    public BookViewModel(Application application){
+    public BookViewModel(Application application) {
         super(application);
         repository = ((com.guillaouic.test.Application) application).getRepository();
+        loading = new ObservableInt(View.GONE);
 
     }
 
-    /*
-     *  Observer called in Search_Fragment, listening for network call.
-     * */
-
+    // Observer called in Search_Fragment, listening for network data call.
 
     public LiveData<Book> getBookList() {
         if (ItemList == null) {
@@ -58,9 +62,7 @@ public class BookViewModel extends AndroidViewModel {
         return ItemList;
     }
 
-    /*
-     *  Observer called in History_Fragment, listening for database call.
-     * */
+    // Observer called in History_Fragment, listening for database call.
 
     public LiveData<List<Item>> getBookListDatabase() {
         if (ItemListDatabase == null) {
@@ -70,7 +72,7 @@ public class BookViewModel extends AndroidViewModel {
     }
 
 
-    public void GetBook_fromDatabase(){
+    public void GetBook_fromDatabase() {
         repository.getBookDatabase();
     }
 
@@ -83,25 +85,27 @@ public class BookViewModel extends AndroidViewModel {
     }
 
     public Book getBook() {
-        return ItemList.getValue() ;
+        return ItemList.getValue();
     }
 
-    public List<Item> getBookDatabase() {
-        return ItemListDatabase.getValue() ;
+    public DataRepository getRepository() {
+        return repository;
     }
-    /*
-    *  OnClickListener Callback Search Button
-    * */
+
+
+    // ClickCallback  Search Button, call Book API
 
     public final SearchClickCallback mSearchClickCallback = new SearchClickCallback() {
         @Override
         public void onClick(String search) {
-            // Load data network from repository, link livedata repo --> ItemList
-                repository.loadNetworkData().getBooks_Network(search);
-
+            // Load  network data, linked livedata.
+            repository.loadNetworkData().getBooks_Network(search);
+            loading.set(View.VISIBLE);
         }
 
     };
+
+    // ClickCallback RecyclerView click item
 
     public final RecyclerViewClickCallback recyclerViewClickCallback = new RecyclerViewClickCallback() {
         @Override
@@ -114,6 +118,8 @@ public class BookViewModel extends AndroidViewModel {
         }
     };
 
+
+    // ClickCallback History Button
 
     public final HistoryClickCallback mHistoryClickCallBack = new HistoryClickCallback() {
         @Override
@@ -130,7 +136,8 @@ public class BookViewModel extends AndroidViewModel {
 
     public TextWatcher watcher = new TextWatcherAdapter() {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-        @Override public void afterTextChanged(Editable s) {
+        @Override
+        public void afterTextChanged(Editable s) {
             if (!Objects.equals(search.get(), s.toString())) {
                 search.set(s.toString());
             }
@@ -141,11 +148,6 @@ public class BookViewModel extends AndroidViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
-        Log.d(TAG, "on cleared called");
-    }
-
-    public DataRepository getRepository() {
-        return repository;
     }
 
 }

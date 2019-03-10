@@ -13,7 +13,7 @@ import com.guillaouic.test.utils.ActivityUtils;
 import instagallery.app.com.gallery.R;
 
 
-public class HistoryActivity extends AppCompatActivity implements View.OnClickListener{
+public class HistoryActivity extends AppCompatActivity{
 
 
     @Override
@@ -78,12 +78,6 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
     public void onDestroy() {
         super.onDestroy();
     }
-
-
-    @Override
-    public void onClick(View view) {
-    }
-
 
 }
 

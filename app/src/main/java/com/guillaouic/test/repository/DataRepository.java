@@ -1,19 +1,19 @@
-package com.guillaouic.test;
+package com.guillaouic.test.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Observer;
-import android.support.annotation.Nullable;
-import android.util.Log;
 
-import com.guillaouic.test.ViewModel.Interactor;
-import com.guillaouic.test.ViewModel.InteractorImpl;
+import com.guillaouic.test.network.Interactor;
+import com.guillaouic.test.network.InteractorImpl;
 import com.guillaouic.test.database.Database;
 import com.guillaouic.test.model.bookModel.Book;
 import com.guillaouic.test.model.bookModel.Item;
 
 import java.util.List;
+
+/*
+ *  DataRepository : Permit to call/observe data books from network or database,
+ * */
 
 public class DataRepository {
 
@@ -34,7 +34,7 @@ public class DataRepository {
             data = interactor.getData();
         }
         if (data_database == null) {
-            data_database= database.getData();
+            data_database = database.getData();
         }
     }
 
@@ -44,7 +44,7 @@ public class DataRepository {
     }
 
     public void getBookDatabase() {
-         mDatabase.getBookDatabase(mDatabase);
+        mDatabase.getBookDatabase(mDatabase);
     }
 
     public LiveData<Book> getBook() {

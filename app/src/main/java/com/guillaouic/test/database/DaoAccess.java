@@ -13,14 +13,19 @@ import com.guillaouic.test.model.bookModel.Item;
 
 import java.util.List;
 
+/*
+ *  Room DaoAccess : functions to insert, fetch, and delete books.
+ * */
+
 @Dao
  public interface DaoAccess {
 
-
  @Insert(onConflict = OnConflictStrategy.REPLACE)
  void insertBook (Item book);
+
  @Query ("SELECT * FROM item")
  LiveData<List<Item>> fetchListBooks();
+
  @Query("DELETE FROM item")
  public void clearBooktable();
  }

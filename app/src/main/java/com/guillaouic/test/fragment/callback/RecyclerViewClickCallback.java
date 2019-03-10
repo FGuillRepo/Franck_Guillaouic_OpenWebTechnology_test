@@ -1,4 +1,4 @@
-package com.guillaouic.test.adapter;
+package com.guillaouic.test.fragment.callback;
 
 import com.guillaouic.test.model.bookModel.Item;
 

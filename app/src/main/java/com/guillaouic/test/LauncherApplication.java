@@ -5,7 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.guillaouic.test.activity.RepositoryActivity;
+import com.guillaouic.test.activity.SearchActivity;
 
 import instagallery.app.com.gallery.R;
 
@@ -18,7 +18,7 @@ public class LauncherApplication extends Activity {
         this.setContentView(R.layout.activity_launcher);
 
         if (savedInstanceState == null) {
-            Intent intent = new Intent(getBaseContext(), RepositoryActivity.class);
+            Intent intent = new Intent(getBaseContext(), SearchActivity.class);
             startActivity(intent);
             finish();
         }

@@ -7,19 +7,15 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.guillaouic.test.adapter.RepositoryAdapter;
-import com.guillaouic.test.adapter.SubscribeModel;
-import com.guillaouic.test.livedataviewmodel.BookViewModel;
-import com.guillaouic.test.model.bookModel.Book;
+import com.guillaouic.test.fragment.callback.SubscribeModel;
+import com.guillaouic.test.viewmodel.BookViewModel;
 import com.guillaouic.test.model.bookModel.Item;
 
 import java.util.List;
@@ -27,13 +23,16 @@ import java.util.List;
 import instagallery.app.com.gallery.R;
 import instagallery.app.com.gallery.databinding.FragmentHistoryBinding;
 
+/*
+ *  History_fragment :show book history, data retrieve from database
+ *
+ * */
 
-public class History_fragment extends Fragment implements SubscribeModel{
+public class History_fragment extends BookParentFragment implements SubscribeModel {
 
     public RepositoryAdapter repositoryAdapter;
     private BookViewModel bookViewModel;
     private FragmentHistoryBinding mBinding;
-
 
 
     public static History_fragment newInstance() {
@@ -59,6 +58,7 @@ public class History_fragment extends Fragment implements SubscribeModel{
         mBinding.setModel(bookViewModel);
         mBinding.setCallbackhistory(bookViewModel.mHistoryClickCallBack);
         subscribeToModel(bookViewModel);
+
         Setup();
 
         bookViewModel.GetBook_fromDatabase();
@@ -66,10 +66,10 @@ public class History_fragment extends Fragment implements SubscribeModel{
 
     @Override
     public void subscribeToModel(AndroidViewModel model) {
-        ((BookViewModel)model).getBookListDatabase().observe(getActivity(), new Observer<List<Item>>() {
+        ((BookViewModel) model).getBookListDatabase().observe(getActivity(), new Observer<List<Item>>() {
             @Override
             public void onChanged(@Nullable List<Item> item) {
-                if (item != null){
+                if (item != null) {
                     repositoryAdapter.setBookList(item);
                 }
             }
@@ -77,17 +77,17 @@ public class History_fragment extends Fragment implements SubscribeModel{
     }
 
     public void Setup() {
-        Toolbar toolbar= mBinding.toolbarLayout.toolbar;
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        activity.getSupportActionBar().setTitle(R.string.screen_history);
-       //  mBinding.toolbarL.toolbar.setText(getString(R.string.screen_history));
+        setToolbar(mBinding.toolbarLayout.toolbar, getString(R.string.screen_history));
+        setButton_History_Visible(false);
+
+        //  mBinding.toolbarL.toolbar.setText(getString(R.string.screen_history));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mBinding.recyclerview.setLayoutManager(layoutManager);
         mBinding.recyclerview.setItemAnimator(new DefaultItemAnimator());
-        repositoryAdapter = new RepositoryAdapter(getActivity(),bookViewModel.recyclerViewClickCallback);
+        repositoryAdapter = new RepositoryAdapter(getActivity(), bookViewModel.recyclerViewClickCallback);
         mBinding.recyclerview.setAdapter(repositoryAdapter);
     }
+
+
 }

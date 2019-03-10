@@ -1,4 +1,4 @@
-package com.guillaouic.test.adapter;
+package com.guillaouic.test.fragment.callback;
 
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.ViewModel;

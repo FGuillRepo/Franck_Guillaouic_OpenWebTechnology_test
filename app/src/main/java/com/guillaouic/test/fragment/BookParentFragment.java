@@ -1,35 +1,37 @@
 package com.guillaouic.test.fragment;
 
 
-import android.app.Activity;
-import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.guillaouic.test.database.Database;
-import com.guillaouic.test.model.bookModel.Item;
-import com.guillaouic.test.utils.DatabaseInitializer;
 
 import instagallery.app.com.gallery.R;
-import instagallery.app.com.gallery.databinding.FragmentDetailBinding;
 
+/*
+ *  Parent Fragment for Book fragments : Details_fragment, History_fragment, Search_fragment
+ *  Use for Toolbar implementation
+ *
+ * */
 
-public class BookParentFragment extends Fragment {
+public class BookParentFragment extends Fragment{
 
     private Toolbar toolbar;
-    private ImageView back_button;
+    private boolean buttonHistory_visible = true;
+    private AppCompatActivity appCompatActivity;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return super.onCreateView(inflater,container,savedInstanceState);
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
@@ -37,14 +39,67 @@ public class BookParentFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
     }
 
-    public void setToolbar(final Activity activity, ImageView back_button, TextView title, int titleToolbar){
-        title.setText(titleToolbar);
-        back_button.setOnClickListener(new View.OnClickListener() {
+
+    public void setToolbar(Toolbar bar, String titleToolbar) {
+        toolbar = bar;
+        appCompatActivity = (AppCompatActivity) getActivity();
+        appCompatActivity.setSupportActionBar(toolbar);
+        appCompatActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        appCompatActivity.getSupportActionBar().setDisplayShowHomeEnabled(true);
+        appCompatActivity.getSupportActionBar().setTitle(titleToolbar);
+        setHasOptionsMenu(true);
+
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_left_arrow));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.finish();
+                appCompatActivity.finish();
             }
         });
+    }
+
+    public void setButton_History_Visible(boolean button_History_Visibility) {
+        buttonHistory_visible = button_History_Visibility;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_history:
+                // Do onlick on menu action here
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        if (buttonHistory_visible) {
+            menu.findItem(R.id.action_history).setVisible(true);
+        } else {
+            menu.findItem(R.id.action_history).setVisible(false);
+        }
+        invalidateOptionsMenu();
+        super.onPrepareOptionsMenu(menu);
+    }
+
+    public Toolbar getToolbar() {
+        return toolbar;
+    }
+
+    public void invalidateOptionsMenu() {
+        getAppCompatActivity().invalidateOptionsMenu();
+    }
+
+    public AppCompatActivity getAppCompatActivity() {
+        return appCompatActivity;
     }
 
 }

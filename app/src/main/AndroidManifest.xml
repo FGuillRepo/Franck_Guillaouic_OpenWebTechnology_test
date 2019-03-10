@@ -18,6 +18,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
+        android:windowSoftInputMode="adjustResize"
         android:configChanges="orientation|screenSize"
         >
 
@@ -30,20 +31,14 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.guillaouic.test.activity.RepositoryDetailActivity">
-
-        </activity>
-
-        <activity android:name="com.guillaouic.test.activity.RepositoryActivity">
-
+        <activity android:name="com.guillaouic.test.activity.SearchActivity"
+            >
         </activity>
 
         <activity android:name="com.guillaouic.test.activity.HistoryActivity">
-
         </activity>
 
         <activity android:name="com.guillaouic.test.activity.DetailsActivity">
-
         </activity>
 
     </application>

@@ -1,4 +1,4 @@
-package com.guillaouic.test.RetroFit;
+package com.guillaouic.test.retrofit;
 
 import android.content.Context;
 
@@ -26,7 +26,7 @@ public class RetroFitClient {
 
     public  RetrofitService getRetroFitService(Context context) {
         final Retrofit retrofit = createRetroFit(context);
-        return retrofit.create(com.guillaouic.test.RetroFit.RetrofitService.class);
+        return retrofit.create(com.guillaouic.test.retrofit.RetrofitService.class);
     }
 
     public  Retrofit createRetroFi() {
@@ -40,7 +40,7 @@ public class RetroFitClient {
 
     public  RetrofitService getRetroFitServic() {
         final Retrofit retrofit = createRetroFi();
-        return retrofit.create(com.guillaouic.test.RetroFit.RetrofitService.class);
+        return retrofit.create(com.guillaouic.test.retrofit.RetrofitService.class);
     }
 
 }

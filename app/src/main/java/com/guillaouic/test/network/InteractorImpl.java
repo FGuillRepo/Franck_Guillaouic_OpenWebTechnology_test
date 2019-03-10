@@ -1,15 +1,9 @@
-package com.guillaouic.test.ViewModel;
+package com.guillaouic.test.network;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.content.Context;
-import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.util.Log;
 
-import com.guillaouic.test.RetroFit.RetroFitClient;
-import com.guillaouic.test.database.Database;
+import com.guillaouic.test.retrofit.RetroFitClient;
 import com.guillaouic.test.model.bookModel.Book;
 
 import io.reactivex.Observable;
@@ -17,14 +11,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
+/*
+ *  InteractorImple : contain function  to call Book API, and emit livedata value to repository,
+ * */
+
 public class InteractorImpl implements Interactor {
 
-    OnRequestFinishedListener listener;
     static MediatorLiveData<Book> data = new MediatorLiveData<>();
-    private Context context;
-
-
-
 
     public MediatorLiveData<Book> getData() {
         return data;
@@ -58,13 +51,5 @@ public class InteractorImpl implements Interactor {
                 });
         return data;
     }
-
-    @Override
-    public void getData_Network(final Context context, final OnRequestFinishedListener listener, String title) {
-        this.listener = listener;
-    }
-
-
-
 }
 

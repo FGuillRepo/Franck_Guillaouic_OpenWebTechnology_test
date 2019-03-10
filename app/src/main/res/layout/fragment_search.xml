@@ -2,228 +2,114 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="android.view.View"/>
 
-        <variable name="isLoading" type="boolean" />
-        <variable name="model" type="com.guillaouic.test.livedataviewmodel.BookViewModel"/>
-        <variable name="callback" type="com.guillaouic.test.adapter.SearchClickCallback"/>
-        <variable name="callbackhistory" type="com.guillaouic.test.adapter.HistoryClickCallback"/>
+        <import type="android.view.View" />
+
+        <variable
+            name="isLoading"
+            type="boolean" />
+
+        <variable
+            name="model"
+            type="com.guillaouic.test.viewmodel.BookViewModel" />
+
+        <variable
+            name="callback"
+            type="com.guillaouic.test.fragment.callback.SearchClickCallback" />
+
+        <variable
+            name="callbackhistory"
+            type="com.guillaouic.test.fragment.callback.HistoryClickCallback" />
 
     </data>
 
-    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/coordinatorLayout"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipeContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/linear_slide">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <include layout="@layout/view_toolbar"
-                        android:id="@+id/toolbarLayout"
-                        app:hasmodel="@{model}">
-                    </include>
-
-                    <Button
-                        android:id="@+id/history_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:gravity="end"
-                        android:onClick="@{() ->  callbackhistory.onClick()}"
-                        android:text="History" />
-
-                </RelativeLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/frame_expand"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#FFF2F2F2"
-                    android:orientation="vertical"
-                    android:weightSum="3">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.3"
-                        android:background="@color/white"
-                        android:weightSum="2">
-
-                        <EditText
-                            android:id="@+id/search_editText"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1.5"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginStart="5dp"
-                            android:paddingBottom="3dp"
-                            android:allowUndo="true"
-                            android:text="@{model.title}"
-                            android:textSize="@dimen/textsize17"
-                            android:hint="@string/search_text"
-                            android:addTextChangedListener="@{model.watcher}"/>
-
-
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_weight="0.5"
-                            android:layout_margin="5dp"
-                            android:layout_height="match_parent"
-                            android:id="@+id/search_button"
-                            android:onClick="@{() ->  callback.onClick(model.getSearch())}"
-                            android:src="@drawable/ic_search" />
-                    </LinearLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="2.7"
-                        android:background="@color/white">
-
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/recyclerview"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="2dp"
-                            android:background="@color/white">
-
-                        </android.support.v7.widget.RecyclerView>
-
-                        <ProgressBar
-                            android:id="@+id/animation_nonetwork"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:indeterminate="true"
-                            android:indeterminateOnly="true"
-                            android:visibility="invisible" />
-
-
-                    </RelativeLayout>
-
-
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-
-        </android.support.v4.widget.SwipeRefreshLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/no_item"
+            android:id="@+id/coordinatorLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="invisible"
-            android:weightSum="3">
+            android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"></View>
+            <include
+                android:id="@+id/toolbarLayout"
+                layout="@layout/view_toolbar"></include>
 
             <LinearLayout
+                android:id="@+id/frame_expand"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="center"
+                android:layout_height="match_parent"
+                android:background="#FFF2F2F2"
                 android:orientation="vertical"
-                android:weightSum="3">
+                android:weightSum="2">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:orientation="vertical"
+                    android:layout_weight="0.25"
+                    android:background="@color/white"
                     android:weightSum="2">
 
+                    <EditText
+                        android:id="@+id/search_editText"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1.5"
+                        android:addTextChangedListener="@{model.watcher}"
+                        android:allowUndo="true"
+                        android:hint="@string/search_text"
+                        android:paddingBottom="3dp"
+                        android:text="@{model.title}"
+                        android:textSize="@dimen/textsize17" />
+
+
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1.7" />
+                        android:id="@+id/search_button"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="5dp"
+                        android:layout_weight="0.5"
+                        android:onClick="@{() ->  callback.onClick(model.getSearch())}"
+                        android:src="@drawable/ic_search" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/grey">
+
+                    </View>
                 </LinearLayout>
 
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview"
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="no data"
-                    android:textColor="@color/blue"
-                    android:textSize="@dimen/textsize16" />
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1.75"
+                    android:background="@color/white">
+
+                </android.support.v7.widget.RecyclerView>
+
             </LinearLayout>
-
-
         </LinearLayout>
 
-        <RelativeLayout
-            android:id="@+id/frame_nonetwork"
-            android:layout_width="match_parent"
+        <ProgressBar
+            android:id="@+id/spinnerLoading"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_margin="20dp"
-            android:visibility="invisible">
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:visibility="@{model.loading}" />
 
+    </RelativeLayout>
 
-            <LinearLayout
-                android:id="@+id/reconnect"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="3">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2.5"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/te"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="7dp"
-                        android:background="#00000000"
-                        android:gravity="center"
-                        android:text=""
-                        android:textColor="#313131"
-                        android:textSize="15sp"
-                        android:visibility="visible" />
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-
-        </RelativeLayout>
-    </android.support.design.widget.CoordinatorLayout>
 </layout>

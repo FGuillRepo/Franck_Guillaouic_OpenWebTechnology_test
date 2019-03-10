@@ -13,7 +13,7 @@ import com.guillaouic.test.fragment.Search_fragment;
 import com.guillaouic.test.utils.ActivityUtils;
 
 
-public class RepositoryActivity extends AppCompatActivity implements View.OnClickListener{
+public class SearchActivity extends AppCompatActivity implements View.OnClickListener{
 
 
     @Override

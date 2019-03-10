@@ -1,13 +1,10 @@
-package com.guillaouic.test.RetroFit;
+package com.guillaouic.test.retrofit;
 
-
-import android.databinding.ObservableField;
 
 import com.guillaouic.test.model.bookModel.Book;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 

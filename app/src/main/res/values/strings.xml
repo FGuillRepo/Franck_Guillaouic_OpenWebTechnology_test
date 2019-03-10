@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Guillaouic Franck Scout24 Test </string>
+    <string name="app_name">Franck_Guillaouic_OWT_test</string>
 
     <!-- Authentication -->
     <string name="auth_base_url">https://www.googleapis.com</string>
@@ -19,8 +19,6 @@
     <string name="screen_detail">Detail</string>
 
     <string name="search_text">Search a book title</string>
-
-
 
     <string name="book_description">Description : %s</string>
     <string name="book_language">Language : %s</string>

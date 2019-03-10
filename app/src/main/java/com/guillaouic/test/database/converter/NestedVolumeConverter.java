@@ -10,6 +10,10 @@ import com.guillaouic.test.model.bookModel.VolumeInfo;
 import java.lang.reflect.Type;
 import java.util.List;
 
+/*
+ *  Room NestedItemConverter : Use in Entity.
+ * */
+
 public class NestedVolumeConverter {
     private static Gson gson = new Gson();
     private static Type type = new TypeToken<VolumeInfo>(){}.getType();

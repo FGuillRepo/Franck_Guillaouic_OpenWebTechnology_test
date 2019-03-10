@@ -9,6 +9,10 @@ import com.guillaouic.test.model.bookModel.Item;
 import java.lang.reflect.Type;
 import java.util.List;
 
+/*
+ *  Room NestedItemConverter : Use in Entity.
+ * */
+
 public class NestedItemConverter {
     private static Gson gson = new Gson();
     private static Type type = new TypeToken<List<Item>>(){}.getType();

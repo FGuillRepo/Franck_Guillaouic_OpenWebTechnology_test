@@ -1,30 +1,23 @@
-package com.guillaouic.test.utils;
+package com.guillaouic.test.database;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.persistence.room.Room;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import com.guillaouic.test.database.Database;
-import com.guillaouic.test.model.bookModel.Book;
 import com.guillaouic.test.model.bookModel.Item;
 
-import java.util.ArrayList;
-import java.util.List;
 
-public class DatabaseInitializer {
+/*
+ *  Class to insert books item in database asynchronously.
+ *  Used in Details_fragment.
+ *  Can be use from all class, ex : Database_Insert.insertItemAsync(Database.getInstance(getActivity()), item);
+ * */
 
-    private static final String TAG = DatabaseInitializer.class.getName();
+public class Database_Insert {
 
-
-
-    public static void populateAsync(@NonNull final Database db,Item book) {
+    public static void insertItemAsync(@NonNull final Database db,Item book) {
         InsertData task = new InsertData(db,book);
         task.execute();
     }
-
 
     static class InsertData extends AsyncTask<Void, Void, Void> {
         private Item book;
@@ -36,9 +29,7 @@ public class DatabaseInitializer {
         }
         @Override
         protected Void doInBackground(Void... voids) {
-         //   database.getItemDAO().clearBooktable();
             database.getItemDAO().insertBook(book);
-
             return null;
         }
 

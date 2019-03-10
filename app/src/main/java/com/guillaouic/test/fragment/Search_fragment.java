@@ -4,26 +4,21 @@ package com.guillaouic.test.fragment;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
-import com.guillaouic.test.adapter.HistoryClickCallback;
-import com.guillaouic.test.adapter.SubscribeModel;
-import com.guillaouic.test.livedataviewmodel.BookViewModel;
-import com.guillaouic.test.ViewModel.RequestView;
+import com.guillaouic.test.fragment.callback.SubscribeModel;
+import com.guillaouic.test.viewmodel.BookViewModel;
 import com.guillaouic.test.model.bookModel.Book;
 import com.guillaouic.test.model.bookModel.Item;
-import com.guillaouic.test.utils.Utils;
 import com.guillaouic.test.adapter.RepositoryAdapter;
 
 import java.util.ArrayList;
@@ -33,8 +28,12 @@ import java.util.List;
 import instagallery.app.com.gallery.R;
 import instagallery.app.com.gallery.databinding.FragmentSearchBinding;
 
+/*
+ *  Search_fragment :search a book by title, retrieve data from book API over network.
+ *
+ * */
 
-public class Search_fragment extends Fragment implements SubscribeModel {
+public class Search_fragment extends BookParentFragment implements SubscribeModel {
 
     private RepositoryAdapter repositoryAdapter;
     private BookViewModel bookViewModel;
@@ -59,15 +58,14 @@ public class Search_fragment extends Fragment implements SubscribeModel {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         bookViewModel = ViewModelProviders.of(this).get(BookViewModel.class);
         mBinding.setModel(bookViewModel);
         mBinding.setCallback(bookViewModel.mSearchClickCallback);
         mBinding.setCallbackhistory(bookViewModel.mHistoryClickCallBack);
         subscribeToModel(bookViewModel);
-        ShowLoading();
         Setup();
-
     }
 
     @Override
@@ -77,7 +75,7 @@ public class Search_fragment extends Fragment implements SubscribeModel {
             public void onChanged(@Nullable Book item) {
                 if (item.getItems()!= null && item.getItems().size()>0) {
                     repositoryAdapter.setBookList(FilterBook(item));
-                    HideNetworkView();
+                    bookViewModel.loading.set(View.INVISIBLE);
                 }
             }
         });
@@ -96,7 +94,9 @@ public class Search_fragment extends Fragment implements SubscribeModel {
 
 
     public void Setup() {
-       // mBinding.toolbar.getTitle().setText(getString(R.string.screen_search));
+        setToolbar(mBinding.toolbarLayout.toolbar,getString(R.string.screen_search));
+        setButton_History_Visible(true);
+
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mBinding.recyclerview.setLayoutManager(layoutManager);
@@ -111,21 +111,15 @@ public class Search_fragment extends Fragment implements SubscribeModel {
 
 
 
-    public void ShowLoading() {
-        mBinding.recyclerview.setVisibility(View.INVISIBLE);
-        mBinding.frameNonetwork.setVisibility(View.VISIBLE);
-        mBinding.animationNonetwork.setVisibility(View.VISIBLE);
-        mBinding.reconnect.setVisibility(View.INVISIBLE);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_history:
+                bookViewModel.mHistoryClickCallBack.onClick();
+                return true;
+        }
+        return false;
     }
-
-
-    public void HideNetworkView() {
-        mBinding.recyclerview.setVisibility(View.VISIBLE);
-        mBinding.frameNonetwork.setVisibility(View.INVISIBLE);
-        mBinding.animationNonetwork.setVisibility(View.INVISIBLE);
-        mBinding.reconnect.setVisibility(View.INVISIBLE);
-    }
-
 
 
 }
