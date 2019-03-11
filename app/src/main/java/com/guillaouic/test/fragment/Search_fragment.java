@@ -3,6 +3,7 @@ package com.guillaouic.test.fragment;
 
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import com.guillaouic.test.Application;
 import com.guillaouic.test.fragment.callback.SubscribeModel;
 import com.guillaouic.test.viewmodel.BookViewModel;
 import com.guillaouic.test.pojo.bookModel.Book;
@@ -61,7 +63,7 @@ public class Search_fragment extends BookParentFragment implements SubscribeMode
         super.onActivityCreated(savedInstanceState);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        bookViewModel = ViewModelProviders.of(this).get(BookViewModel.class);
+        bookViewModel = new BookViewModel(Application.getApplication());
         mBinding.setModel(bookViewModel);
         mBinding.setCallback(bookViewModel.mSearchClickCallback);
         mBinding.setCallbackhistory(bookViewModel.mHistoryClickCallBack);
@@ -70,8 +72,8 @@ public class Search_fragment extends BookParentFragment implements SubscribeMode
     }
 
     @Override
-    public void subscribeToModel(AndroidViewModel model) {
-        ((BookViewModel)model).getBookList().observe(this, new Observer<Book>() {
+    public void subscribeToModel(ViewModel model) {
+        ((BookViewModel)model).getBooks().observe(this, new Observer<Book>() {
             @Override
             public void onChanged(@Nullable Book item) {
                 if (item.getItems()!= null && item.getItems().size()>0) {

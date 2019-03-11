@@ -3,6 +3,7 @@ package com.guillaouic.test.fragment;
 
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.guillaouic.test.Application;
 import com.guillaouic.test.adapter.RepositoryAdapter;
 import com.guillaouic.test.fragment.callback.SubscribeModel;
 import com.guillaouic.test.viewmodel.BookViewModel;
@@ -54,7 +56,7 @@ public class History_fragment extends BookParentFragment implements SubscribeMod
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        bookViewModel = ViewModelProviders.of(this).get(BookViewModel.class);
+        bookViewModel = new BookViewModel(Application.getApplication());
         mBinding.setModel(bookViewModel);
         mBinding.setCallbackhistory(bookViewModel.mHistoryClickCallBack);
         subscribeToModel(bookViewModel);
@@ -65,7 +67,7 @@ public class History_fragment extends BookParentFragment implements SubscribeMod
     }
 
     @Override
-    public void subscribeToModel(AndroidViewModel model) {
+    public void subscribeToModel(ViewModel model) {
         ((BookViewModel) model).getBookListDatabase().observe(getActivity(), new Observer<List<Item>>() {
             @Override
             public void onChanged(@Nullable List<Item> item) {

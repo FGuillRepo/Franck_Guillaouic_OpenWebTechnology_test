@@ -2,6 +2,7 @@ package com.guillaouic.test.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.MutableLiveData;
 
 import com.guillaouic.test.network.Interactor;
 import com.guillaouic.test.network.InteractorImpl;
@@ -24,8 +25,8 @@ public class DataRepository {
 
     protected Interactor interactor;
 
-    private MediatorLiveData<Book> data;
-    private MediatorLiveData<List<Item>> data_database;
+    private MutableLiveData<Book> data;
+    private MutableLiveData<List<Item>> data_database;
 
     public DataRepository(Database database) {
         mDatabase = database;
@@ -47,7 +48,11 @@ public class DataRepository {
         mDatabase.getBookDatabase(mDatabase);
     }
 
-    public LiveData<Book> getBook() {
+    public MutableLiveData<Book> getBook() {
+        return data;
+    }
+
+    public MutableLiveData<Book> getData() {
         return data;
     }
 

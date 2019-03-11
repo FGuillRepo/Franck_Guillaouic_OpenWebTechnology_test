@@ -17,12 +17,14 @@ public class Application extends android.app.Application {
         super.attachBaseContext(context);
         MultiDex.install(this);
         setContext(context);
+        application=this;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
+
     }
 
 

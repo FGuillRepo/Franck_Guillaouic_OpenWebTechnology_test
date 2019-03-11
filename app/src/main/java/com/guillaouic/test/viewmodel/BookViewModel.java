@@ -4,6 +4,8 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.ViewModel;
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.Bindable;
 import android.databinding.ObservableField;
@@ -36,30 +38,32 @@ import instagallery.app.com.gallery.BR;
  *  BookViewModel : Use to observe books lists, UI click callbacks and searchview.
  * */
 
-public class BookViewModel extends AndroidViewModel {
+public class BookViewModel extends ViewModel {
 
     private DataRepository repository;
-
+    private com.guillaouic.test.Application context;
     private final ObservableField<String> search = new ObservableField<>("");
 
-    private LiveData<Book> ItemList;
+    public MutableLiveData<Book> BookList;
     private LiveData<List<Item>> ItemListDatabase;
     public ObservableInt loading;
 
-    public BookViewModel(Application application) {
-        super(application);
-        repository = ((com.guillaouic.test.Application) application).getRepository();
+    public BookViewModel(com.guillaouic.test.Application application) {
+        this.context=application;
+        repository =  context.getRepository();
         loading = new ObservableInt(View.GONE);
-
     }
 
+    public BookViewModel() {
+        BookList=new MutableLiveData<>();
+    }
     // Observer called in Search_Fragment, listening for network data call.
 
-    public LiveData<Book> getBookList() {
-        if (ItemList == null) {
-            ItemList = repository.getBook();
+    public MutableLiveData<Book> getBooks() {
+        if (BookList == null) {
+                BookList = repository.getBook();
         }
-        return ItemList;
+        return BookList;
     }
 
     // Observer called in History_Fragment, listening for database call.
@@ -80,18 +84,17 @@ public class BookViewModel extends AndroidViewModel {
         return search;
     }
 
-    public String getSearch() {
-        return search.get();
+    public MutableLiveData<Book> getBookList() {
+        return BookList;
     }
 
-    public Book getBook() {
-        return ItemList.getValue();
+    public String getSearch() {
+        return search.get();
     }
 
     public DataRepository getRepository() {
         return repository;
     }
-
 
     // ClickCallback  Search Button, call Book API
 
@@ -102,7 +105,6 @@ public class BookViewModel extends AndroidViewModel {
             repository.loadNetworkData().getBooks_Network(search);
             loading.set(View.VISIBLE);
         }
-
     };
 
     // ClickCallback RecyclerView click item
@@ -110,11 +112,11 @@ public class BookViewModel extends AndroidViewModel {
     public final RecyclerViewClickCallback recyclerViewClickCallback = new RecyclerViewClickCallback() {
         @Override
         public void onClick(Item item) {
-            Intent intent = new Intent(getApplication(), DetailsActivity.class);
+            Intent intent = new Intent(context, DetailsActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("item", item);
             intent.putExtras(bundle);
-            getApplication().startActivity(intent);
+            context.startActivity(intent);
         }
     };
 
@@ -124,8 +126,8 @@ public class BookViewModel extends AndroidViewModel {
     public final HistoryClickCallback mHistoryClickCallBack = new HistoryClickCallback() {
         @Override
         public void onClick() {
-            Intent intent = new Intent(getApplication(), HistoryActivity.class);
-            getApplication().startActivity(intent);
+            Intent intent = new Intent(context, HistoryActivity.class);
+            context.startActivity(intent);
         }
     };
 
@@ -149,5 +151,8 @@ public class BookViewModel extends AndroidViewModel {
     protected void onCleared() {
         super.onCleared();
     }
+
+    /*Testing functions*/
+
 
 }
