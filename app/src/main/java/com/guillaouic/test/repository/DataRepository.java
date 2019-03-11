@@ -6,8 +6,8 @@ import android.arch.lifecycle.MediatorLiveData;
 import com.guillaouic.test.network.Interactor;
 import com.guillaouic.test.network.InteractorImpl;
 import com.guillaouic.test.database.Database;
-import com.guillaouic.test.model.bookModel.Book;
-import com.guillaouic.test.model.bookModel.Item;
+import com.guillaouic.test.pojo.bookModel.Book;
+import com.guillaouic.test.pojo.bookModel.Item;
 
 import java.util.List;
 

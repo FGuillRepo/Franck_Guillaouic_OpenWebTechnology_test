@@ -78,12 +78,6 @@
                         android:onClick="@{() ->  callback.onClick(model.getSearch())}"
                         android:src="@drawable/ic_search" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/grey">
-
-                    </View>
                 </LinearLayout>
 
 

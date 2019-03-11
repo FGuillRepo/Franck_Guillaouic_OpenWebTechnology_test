@@ -4,7 +4,7 @@ import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.guillaouic.test.retrofit.RetroFitClient;
-import com.guillaouic.test.model.bookModel.Book;
+import com.guillaouic.test.pojo.bookModel.Book;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;

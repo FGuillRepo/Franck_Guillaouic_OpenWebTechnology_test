@@ -4,8 +4,8 @@ import android.arch.persistence.room.TypeConverter;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import com.guillaouic.test.model.bookModel.Item;
-import com.guillaouic.test.model.bookModel.VolumeInfo;
+import com.guillaouic.test.pojo.bookModel.Item;
+import com.guillaouic.test.pojo.bookModel.VolumeInfo;
 
 import java.lang.reflect.Type;
 import java.util.List;

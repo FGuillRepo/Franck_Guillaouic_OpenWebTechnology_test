@@ -9,7 +9,8 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
-import com.guillaouic.test.model.bookModel.Item;
+import com.guillaouic.test.pojo.bookModel.Item;
+
 
 import java.util.List;
 

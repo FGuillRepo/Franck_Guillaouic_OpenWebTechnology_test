@@ -8,8 +8,8 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.guillaouic.test.model.bookModel.Book;
-import com.guillaouic.test.model.bookModel.Item;
+import com.guillaouic.test.pojo.bookModel.Book;
+import com.guillaouic.test.pojo.bookModel.Item;
 
 import java.util.List;
 

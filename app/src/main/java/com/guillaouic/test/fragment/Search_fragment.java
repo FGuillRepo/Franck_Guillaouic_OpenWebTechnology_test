@@ -17,9 +17,10 @@ import android.view.WindowManager;
 
 import com.guillaouic.test.fragment.callback.SubscribeModel;
 import com.guillaouic.test.viewmodel.BookViewModel;
-import com.guillaouic.test.model.bookModel.Book;
-import com.guillaouic.test.model.bookModel.Item;
+import com.guillaouic.test.pojo.bookModel.Book;
+import com.guillaouic.test.pojo.bookModel.Item;
 import com.guillaouic.test.adapter.RepositoryAdapter;
+
 
 import java.util.ArrayList;
 import java.util.Collection;

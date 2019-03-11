@@ -1,9 +1,7 @@
 package com.guillaouic.test.database;
 
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-
-import com.guillaouic.test.model.bookModel.Item;
+import com.guillaouic.test.pojo.bookModel.Item;
 
 
 /*
@@ -14,7 +12,7 @@ import com.guillaouic.test.model.bookModel.Item;
 
 public class Database_Insert {
 
-    public static void insertItemAsync(@NonNull final Database db,Item book) {
+    public static void insertItemAsync(final Database db,Item book) {
         InsertData task = new InsertData(db,book);
         task.execute();
     }

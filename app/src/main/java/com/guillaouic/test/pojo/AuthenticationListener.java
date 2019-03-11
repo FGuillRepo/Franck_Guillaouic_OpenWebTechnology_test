@@ -1,4 +1,4 @@
-package com.guillaouic.test.model;
+package com.guillaouic.test.pojo;
 
 public interface AuthenticationListener {
  

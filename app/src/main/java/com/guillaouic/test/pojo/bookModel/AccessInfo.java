@@ -1,5 +1,5 @@
 
-package com.guillaouic.test.model.bookModel;
+package com.guillaouic.test.pojo.bookModel;
 
 import android.arch.persistence.room.Entity;
 

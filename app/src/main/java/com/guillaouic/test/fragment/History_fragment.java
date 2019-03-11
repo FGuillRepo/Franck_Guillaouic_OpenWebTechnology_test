@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import com.guillaouic.test.adapter.RepositoryAdapter;
 import com.guillaouic.test.fragment.callback.SubscribeModel;
 import com.guillaouic.test.viewmodel.BookViewModel;
-import com.guillaouic.test.model.bookModel.Item;
+import com.guillaouic.test.pojo.bookModel.Item;
 
 import java.util.List;
 

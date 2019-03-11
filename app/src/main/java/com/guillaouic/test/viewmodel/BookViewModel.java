@@ -22,8 +22,8 @@ import com.guillaouic.test.activity.HistoryActivity;
 import com.guillaouic.test.fragment.callback.HistoryClickCallback;
 import com.guillaouic.test.fragment.callback.RecyclerViewClickCallback;
 import com.guillaouic.test.fragment.callback.SearchClickCallback;
-import com.guillaouic.test.model.bookModel.Book;
-import com.guillaouic.test.model.bookModel.Item;
+import com.guillaouic.test.pojo.bookModel.Book;
+import com.guillaouic.test.pojo.bookModel.Item;
 import com.guillaouic.test.utils.TextWatcherAdapter;
 
 import java.util.List;
