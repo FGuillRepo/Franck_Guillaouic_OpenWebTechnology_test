@@ -2,14 +2,15 @@ package com.guillaouic.test;
 
 import android.arch.lifecycle.Observer;
 
-import com.guillaouic.test.pojo.bookModel.Book;
-import com.guillaouic.test.pojo.bookModel.Item;
+import com.guillaouic.test.pojo.Book;
+import com.guillaouic.test.pojo.Item;
 import com.guillaouic.test.viewmodel.BookViewModel;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
@@ -32,8 +33,11 @@ public class ExampleUnitTest {
 
     @Mock
     private Observer<Book> observer;
-    private Application application;
 
+    private Application application;
+    Book book;
+    BookViewModel viewModel;
+    Boolean toto=false;
 
     @Test
     public void addition_isCorrect() {
@@ -45,30 +49,34 @@ public class ExampleUnitTest {
         MockitoAnnotations.initMocks(this);
     }
 
-
     @Before
     public void setup() {
+        application = Mockito.mock(Application.class);
+
     }
 
     @Test
-    public void test_clickReturnCorrectObject() {
-        Book book = generateItem();
-        BookViewModel viewModel = new BookViewModel();
+    public void test_ReturnBookOject() {
 
-        viewModel.getBookList().observeForever(observer);
-        // When
-        viewModel.getBookList().postValue(book);
-        // then
+        //Test return object of viewmodel
+        book = generateItem();
+        viewModel = new BookViewModel();
+        viewModel.getBooks().observeForever(observer);
+        viewModel.mSearchClickCallback.onClick("complexe");
+        viewModel.getRepository().getBook().postValue(book);
         verify(observer).onChanged(book);
     }
 
     private Book generateItem() {
         Book book = new Book();
         book.setKind("test");
+        book.setTotalItems(1);
+        book.setId(Long.getLong("00000"));
 
         List<Item> itemlist = new ArrayList<>();
         Item item = new Item();
         item.setId("Book id 1");
+        itemlist.add(item);
         book.setItems(itemlist);
         return book;
     }

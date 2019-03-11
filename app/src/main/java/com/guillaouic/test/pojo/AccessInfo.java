@@ -1,7 +1,5 @@
 
-package com.guillaouic.test.pojo.bookModel;
-
-import android.arch.persistence.room.Entity;
+package com.guillaouic.test.pojo;
 
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;

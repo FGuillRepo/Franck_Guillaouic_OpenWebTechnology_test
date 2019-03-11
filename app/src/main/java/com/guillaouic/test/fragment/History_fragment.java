@@ -1,10 +1,8 @@
 package com.guillaouic.test.fragment;
 
 
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,7 +16,7 @@ import com.guillaouic.test.Application;
 import com.guillaouic.test.adapter.RepositoryAdapter;
 import com.guillaouic.test.fragment.callback.SubscribeModel;
 import com.guillaouic.test.viewmodel.BookViewModel;
-import com.guillaouic.test.pojo.bookModel.Item;
+import com.guillaouic.test.pojo.Item;
 
 import java.util.List;
 
@@ -81,8 +79,6 @@ public class History_fragment extends BookParentFragment implements SubscribeMod
     public void Setup() {
         setToolbar(mBinding.toolbarLayout.toolbar, getString(R.string.screen_history));
         setButton_History_Visible(false);
-
-        //  mBinding.toolbarL.toolbar.setText(getString(R.string.screen_history));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mBinding.recyclerview.setLayoutManager(layoutManager);

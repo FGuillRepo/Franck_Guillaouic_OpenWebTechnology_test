@@ -1,7 +1,7 @@
 package com.guillaouic.test.database;
 
 import android.os.AsyncTask;
-import com.guillaouic.test.pojo.bookModel.Item;
+import com.guillaouic.test.pojo.Item;
 
 
 /*

@@ -6,7 +6,7 @@
 
     <data>
         <import type="android.view.View" />
-        <variable name="book" type="com.guillaouic.test.pojo.bookModel.Item"/>
+        <variable name="book" type="com.guillaouic.test.pojo.Item"/>
         <variable name="callback" type="com.guillaouic.test.fragment.callback.RecyclerViewClickCallback"/>
     </data>
 

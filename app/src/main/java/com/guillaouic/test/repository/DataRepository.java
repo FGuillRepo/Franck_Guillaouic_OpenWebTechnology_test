@@ -1,14 +1,12 @@
 package com.guillaouic.test.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 
-import com.guillaouic.test.network.Interactor;
 import com.guillaouic.test.network.InteractorImpl;
 import com.guillaouic.test.database.Database;
-import com.guillaouic.test.pojo.bookModel.Book;
-import com.guillaouic.test.pojo.bookModel.Item;
+import com.guillaouic.test.pojo.Book;
+import com.guillaouic.test.pojo.Item;
 
 import java.util.List;
 
@@ -21,27 +19,34 @@ public class DataRepository {
 
     private static DataRepository sInstance;
 
-    private final Database mDatabase;
+    private Database mDatabase;
 
-    protected Interactor interactor;
+    protected InteractorImpl network_interactor;
 
     private MutableLiveData<Book> data;
     private MutableLiveData<List<Item>> data_database;
 
+
     public DataRepository(Database database) {
         mDatabase = database;
-        interactor = new InteractorImpl();
+        network_interactor = new InteractorImpl();
         if (data == null) {
-            data = interactor.getData();
+            data = network_interactor.getData();
         }
         if (data_database == null) {
             data_database = database.getData();
         }
     }
 
+    // Constructor use for unit test
+    public DataRepository() {
+        data = new MutableLiveData<>();
+        network_interactor = new InteractorImpl();
+            data = network_interactor.getData();
+    }
 
-    public Interactor loadNetworkData() {
-        return interactor;
+    public InteractorImpl loadNetworkData() {
+        return network_interactor;
     }
 
     public void getBookDatabase() {
@@ -52,9 +57,6 @@ public class DataRepository {
         return data;
     }
 
-    public MutableLiveData<Book> getData() {
-        return data;
-    }
 
     public LiveData<List<Item>> getData_database() {
         return data_database;

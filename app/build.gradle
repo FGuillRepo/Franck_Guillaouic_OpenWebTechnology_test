@@ -30,10 +30,14 @@ android {
             }
         }
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
     dexOptions {
         javaMaxHeapSize "4g"
     }
-
 
 
     buildTypes {
@@ -96,21 +100,9 @@ dependencies {
     compile "com.android.support.test.espresso:espresso-idling-resource:$rootProject.espressoVersion"
     compile "com.google.guava:guava:$rootProject.guavaVersion"
     implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
-    annotationProcessor  "android.arch.persistence.room:compiler:$rootProject.roomVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
 
     compile "com.android.support:multidex:$rootProject.multidex"
-
-    testCompile "org.robolectric:robolectric:$rootProject.robolectric"
-    testCompile "org.robolectric:shadows-support-v4:$rootProject.robolectricSupportV4"
-    testCompile "org.robolectric:shadows-multidex:$rootProject.robolectricmultidex"
-    compile "com.jakewharton:butterknife:$rootProject.butterknife"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifecompiler"
-
-    compile "com.jakewharton.rxbinding:rxbinding:$rootProject.rxbinding"
-    compile "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:$rootProject.rxbindingrecyclerviewv7"
-    compile "com.jakewharton.rxbinding2:rxbinding-support-v4:$rootProject.rxbindingsupportv4"
-    compile "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:$rootProject.rxbindingappcompatv7"
-    compile "com.jakewharton.rxbinding2:rxbinding-design:$rootProject.rxbindingdesign"
 
     compile "com.squareup.retrofit2:retrofit:$rootProject.retrofit"
     compile "com.squareup.retrofit2:converter-gson:$rootProject.convertergson"
@@ -118,18 +110,18 @@ dependencies {
 
     compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroid"
     compile "io.reactivex.rxjava2:rxjava:$rootProject.rxjava"
-    compile "com.tbruyelle.rxpermissions2:rxpermissions:$rootProject.rxpermissions"
+
     compile "com.squareup.okhttp3:okhttp:$rootProject.okhttp"
     compile "com.google.code.gson:gson:$rootProject.gson"
-    compile 'com.squareup.picasso:picasso:2.5.0'
-    implementation "android.arch.lifecycle:extensions:1.1.0"
-    implementation "android.arch.lifecycle:viewmodel:1.1.0"
-    testCompile "android.arch.core:core-testing:1.0.0-alpha3"
+    compile "com.squareup.picasso:picasso:$rootProject.picasso"
+    implementation "android.arch.lifecycle:extensions:$rootProject.androidarc"
+    implementation "android.arch.lifecycle:viewmodel:$rootProject.androidarc"
+    testCompile "android.arch.core:core-testing:$rootProject.androidarc"
 
-    testImplementation 'org.mockito:mockito-core:2.19.0'
-    testImplementation 'junit:junit:4.12'
+    testImplementation "junit:junit:$rootProject.junit"
     testImplementation 'androidx.arch.core:core-testing:2.0.0'
-    androidTestImplementation 'androidx.test:runner:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
-    androidTestImplementation 'org.mockito:mockito-android:2.19.0'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoCore"
+    androidTestImplementation "org.mockito:mockito-android:$rootProject.mockito"
+    testImplementation "org.mockito:mockito-core:$rootProject.mockito"
 }

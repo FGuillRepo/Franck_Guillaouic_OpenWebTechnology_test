@@ -1,11 +1,11 @@
 
-package com.guillaouic.test.pojo.bookModel;
+package com.guillaouic.test.pojo;
 
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class RetailPrice_ implements Serializable
+public class ListPrice_ implements Serializable
 {
 
     @SerializedName("amountInMicros")
@@ -14,7 +14,7 @@ public class RetailPrice_ implements Serializable
     @SerializedName("currencyCode")
     @Expose
     private String currencyCode;
-    private final static long serialVersionUID = -3078635556377985691L;
+    private final static long serialVersionUID = -952632330124674863L;
 
     public Double getAmountInMicros() {
         return amountInMicros;

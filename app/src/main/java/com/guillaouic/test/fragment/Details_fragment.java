@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.guillaouic.test.database.Database;
-import com.guillaouic.test.pojo.bookModel.Item;
+import com.guillaouic.test.pojo.Item;
 import com.guillaouic.test.database.Database_Insert;
 
 import instagallery.app.com.gallery.R;
@@ -25,6 +25,7 @@ public class Details_fragment extends BookParentFragment {
 
     private FragmentDetailBinding mBinding;
     private Item item;
+
     public static Details_fragment newInstance() {
         Details_fragment myFragment = new Details_fragment();
         Bundle args = new Bundle();

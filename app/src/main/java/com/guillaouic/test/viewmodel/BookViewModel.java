@@ -1,13 +1,9 @@
 package com.guillaouic.test.viewmodel;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.content.Context;
 import android.content.Intent;
-import android.databinding.Bindable;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.os.Build;
@@ -18,20 +14,19 @@ import android.text.TextWatcher;
 import android.view.View;
 
 
+import com.guillaouic.test.Application;
 import com.guillaouic.test.repository.DataRepository;
 import com.guillaouic.test.activity.DetailsActivity;
 import com.guillaouic.test.activity.HistoryActivity;
 import com.guillaouic.test.fragment.callback.HistoryClickCallback;
 import com.guillaouic.test.fragment.callback.RecyclerViewClickCallback;
 import com.guillaouic.test.fragment.callback.SearchClickCallback;
-import com.guillaouic.test.pojo.bookModel.Book;
-import com.guillaouic.test.pojo.bookModel.Item;
+import com.guillaouic.test.pojo.Book;
+import com.guillaouic.test.pojo.Item;
 import com.guillaouic.test.utils.TextWatcherAdapter;
 
 import java.util.List;
 import java.util.Objects;
-
-import instagallery.app.com.gallery.BR;
 
 
 /*
@@ -42,36 +37,42 @@ public class BookViewModel extends ViewModel {
 
     private DataRepository repository;
     private com.guillaouic.test.Application context;
-    private final ObservableField<String> search = new ObservableField<>("");
 
-    public MutableLiveData<Book> BookList;
+    private final ObservableField<String> search = new ObservableField<>("");
+    private MutableLiveData<Book> BookList;
     private LiveData<List<Item>> ItemListDatabase;
+    public MutableLiveData<Book> selected;
+
     public ObservableInt loading;
 
+
     public BookViewModel(com.guillaouic.test.Application application) {
-        this.context=application;
-        repository =  context.getRepository();
+        context=application;
+        repository =  ((Application)context).getRepository();
+        BookList = repository.getBook();
+        ItemListDatabase = repository.getData_database();
+
         loading = new ObservableInt(View.GONE);
     }
 
-    public BookViewModel() {
-        BookList=new MutableLiveData<>();
+    // Constructor use for unit test
+    public BookViewModel(){
+        repository =  new DataRepository();
+        BookList = new MutableLiveData<>();
+        BookList=repository.getBook();
+        loading = new ObservableInt(View.GONE);
     }
+
+
     // Observer called in Search_Fragment, listening for network data call.
 
     public MutableLiveData<Book> getBooks() {
-        if (BookList == null) {
-                BookList = repository.getBook();
-        }
         return BookList;
     }
 
     // Observer called in History_Fragment, listening for database call.
 
     public LiveData<List<Item>> getBookListDatabase() {
-        if (ItemListDatabase == null) {
-            ItemListDatabase = repository.getData_database();
-        }
         return ItemListDatabase;
     }
 
@@ -84,9 +85,6 @@ public class BookViewModel extends ViewModel {
         return search;
     }
 
-    public MutableLiveData<Book> getBookList() {
-        return BookList;
-    }
 
     public String getSearch() {
         return search.get();

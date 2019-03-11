@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.guillaouic.test.fragment.callback.RecyclerViewClickCallback;
-import com.guillaouic.test.pojo.bookModel.Item;
+import com.guillaouic.test.pojo.Item;
 import com.squareup.picasso.Picasso;
 
 

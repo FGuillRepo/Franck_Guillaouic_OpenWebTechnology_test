@@ -1,10 +1,8 @@
 package com.guillaouic.test.fragment;
 
 
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,8 +17,8 @@ import android.view.WindowManager;
 import com.guillaouic.test.Application;
 import com.guillaouic.test.fragment.callback.SubscribeModel;
 import com.guillaouic.test.viewmodel.BookViewModel;
-import com.guillaouic.test.pojo.bookModel.Book;
-import com.guillaouic.test.pojo.bookModel.Item;
+import com.guillaouic.test.pojo.Book;
+import com.guillaouic.test.pojo.Item;
 import com.guillaouic.test.adapter.RepositoryAdapter;
 
 

@@ -4,7 +4,7 @@ import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.guillaouic.test.retrofit.RetroFitClient;
-import com.guillaouic.test.pojo.bookModel.Book;
+import com.guillaouic.test.pojo.Book;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -15,7 +15,7 @@ import io.reactivex.schedulers.Schedulers;
  *  InteractorImple : contain function  to call Book API, and emit livedata value to repository,
  * */
 
-public class InteractorImpl implements Interactor {
+public class InteractorImpl {
 
     static MediatorLiveData<Book> data = new MediatorLiveData<>();
 
@@ -26,7 +26,7 @@ public class InteractorImpl implements Interactor {
     // Request repository and fill recycler adapter
     public MutableLiveData<Book> getBooks_Network(String title) {
 
-        Observable<Book> call = new RetroFitClient().getRetroFitServic().getBooks(title);
+        Observable<Book> call = new RetroFitClient().getRetroFitService().getBooks(title);
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<Book>() {
@@ -35,7 +35,6 @@ public class InteractorImpl implements Interactor {
                     public void onNext(Book book) {
                         try {
                                 data.postValue(book);
-
                         } catch (NullPointerException e) {
                         }
                     }

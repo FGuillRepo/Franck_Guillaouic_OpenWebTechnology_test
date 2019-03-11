@@ -2,14 +2,13 @@ package com.guillaouic.test.database;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
-import com.guillaouic.test.pojo.bookModel.Item;
+import com.guillaouic.test.pojo.Item;
 
 
 import java.util.List;

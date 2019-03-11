@@ -1,5 +1,5 @@
 
-package com.guillaouic.test.pojo.bookModel;
+package com.guillaouic.test.pojo;
 
 import android.databinding.BindingAdapter;
 import android.widget.ImageView;
