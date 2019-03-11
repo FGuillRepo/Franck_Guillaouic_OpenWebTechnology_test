@@ -23,8 +23,8 @@ import instagallery.app.com.gallery.databinding.FragmentDetailBinding;
 
 public class Details_fragment extends BookParentFragment {
 
-    FragmentDetailBinding mBinding;
-
+    private FragmentDetailBinding mBinding;
+    private Item item;
     public static Details_fragment newInstance() {
         Details_fragment myFragment = new Details_fragment();
         Bundle args = new Bundle();
@@ -43,19 +43,30 @@ public class Details_fragment extends BookParentFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState == null) {
-            setToolbar(mBinding.toolbarLayout.toolbar, getString(R.string.screen_detail));
+        setToolbar(mBinding.toolbarLayout.toolbar, getString(R.string.screen_detail));
+
+        if (savedInstanceState != null) {
+            item = (Item) savedInstanceState.getSerializable("item");
+            mBinding.setBook(item);
             setButton_History_Visible(false);
 
-            Intent intent = getActivity().getIntent();
-            Bundle bundle = intent.getExtras();
+        } else {
+                setButton_History_Visible(false);
+                Intent intent = getActivity().getIntent();
+                Bundle bundle = intent.getExtras();
 
-            if (bundle != null) {
-                Item item = (Item) bundle.getSerializable("item");
-                mBinding.setBook(item);
-                Database_Insert.insertItemAsync(Database.getInstance(getActivity()), item);
-            }
+                if (bundle != null) {
+                    item = (Item) bundle.getSerializable("item");
+                    mBinding.setBook(item);
+                    Database_Insert.insertItemAsync(Database.getInstance(getActivity()), item);
+                }
         }
+
     }
 
+    @Override
+    public void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("item", item);
+    }
 }
