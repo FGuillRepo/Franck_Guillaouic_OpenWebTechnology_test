@@ -3,8 +3,10 @@ package com.guillaouic.test.network;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 
+import com.guillaouic.test.pojo.Item;
 import com.guillaouic.test.retrofit.RetroFitClient;
 import com.guillaouic.test.pojo.Book;
+import com.guillaouic.test.utils.Message;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -18,9 +20,14 @@ import io.reactivex.schedulers.Schedulers;
 public class InteractorImpl {
 
     static MediatorLiveData<Book> data = new MediatorLiveData<>();
+    static MutableLiveData<String> errorMessage = new MutableLiveData<>();
 
     public MediatorLiveData<Book> getData() {
         return data;
+    }
+
+    public static MutableLiveData<String> getErrorMessage() {
+        return errorMessage;
     }
 
     // Request repository and fill recycler adapter
@@ -34,13 +41,14 @@ public class InteractorImpl {
                     @Override
                     public void onNext(Book book) {
                         try {
-                                data.postValue(book);
+                            data.postValue(book);
                         } catch (NullPointerException e) {
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        errorMessage.postValue(Message.no_network.name());
                     }
 
                     @Override

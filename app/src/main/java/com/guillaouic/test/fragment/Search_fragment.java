@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.view.WindowManager;
 
 import com.guillaouic.test.Application;
 import com.guillaouic.test.fragment.callback.SubscribeModel;
+import com.guillaouic.test.utils.Message;
 import com.guillaouic.test.viewmodel.BookViewModel;
 import com.guillaouic.test.pojo.Book;
 import com.guillaouic.test.pojo.Item;
@@ -69,6 +71,10 @@ public class Search_fragment extends BookParentFragment implements SubscribeMode
         Setup();
     }
 
+    /*
+    *   Observe LiveData on network data call
+    * */
+
     @Override
     public void subscribeToModel(ViewModel model) {
         ((BookViewModel)model).getBooks().observe(this, new Observer<Book>() {
@@ -77,10 +83,19 @@ public class Search_fragment extends BookParentFragment implements SubscribeMode
                 if (item.getItems()!= null && item.getItems().size()>0) {
                     repositoryAdapter.setBookList(FilterBook(item));
                     bookViewModel.loading.set(View.INVISIBLE);
+                    bookViewModel.getErrorMessage().postValue(Message.success.name());
                 }
             }
         });
+
+        ((BookViewModel)model).getErrorMessage().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String error) {
+                    Log.d("errorretrieve",error);
+            }
+        });
     }
+
 
     public List<Item> FilterBook(Book item){
         final Collection bookList = new ArrayList<Item>();
@@ -109,7 +124,6 @@ public class Search_fragment extends BookParentFragment implements SubscribeMode
     /*
      *   Callback presenter network data call
      */
-
 
 
     @Override

@@ -23,14 +23,16 @@ public class DataRepository {
 
     protected InteractorImpl network_interactor;
 
-    private MutableLiveData<Book> data;
+    private MutableLiveData<String> ErrorMessage;
     private MutableLiveData<List<Item>> data_database;
+    private MutableLiveData<Book> data;
 
 
     public DataRepository(Database database) {
         mDatabase = database;
         network_interactor = new InteractorImpl();
         if (data == null) {
+            ErrorMessage = network_interactor.getErrorMessage();
             data = network_interactor.getData();
         }
         if (data_database == null) {
@@ -58,8 +60,12 @@ public class DataRepository {
     }
 
 
-    public LiveData<List<Item>> getData_database() {
+    public LiveData<List<Item>> getBook_database() {
         return data_database;
+    }
+
+    public MutableLiveData<String> getErrorMessage() {
+        return ErrorMessage;
     }
 
     public static DataRepository getInstance(final Database database) {

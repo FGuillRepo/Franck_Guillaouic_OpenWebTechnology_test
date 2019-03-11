@@ -66,7 +66,7 @@ public class History_fragment extends BookParentFragment implements SubscribeMod
 
     @Override
     public void subscribeToModel(ViewModel model) {
-        ((BookViewModel) model).getBookListDatabase().observe(getActivity(), new Observer<List<Item>>() {
+        ((BookViewModel) model).getbookListDatabase().observe(getActivity(), new Observer<List<Item>>() {
             @Override
             public void onChanged(@Nullable List<Item> item) {
                 if (item != null) {

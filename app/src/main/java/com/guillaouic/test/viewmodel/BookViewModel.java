@@ -23,7 +23,9 @@ import com.guillaouic.test.fragment.callback.RecyclerViewClickCallback;
 import com.guillaouic.test.fragment.callback.SearchClickCallback;
 import com.guillaouic.test.pojo.Book;
 import com.guillaouic.test.pojo.Item;
+import com.guillaouic.test.utils.Message;
 import com.guillaouic.test.utils.TextWatcherAdapter;
+import com.guillaouic.test.utils.Utils;
 
 import java.util.List;
 import java.util.Objects;
@@ -39,43 +41,48 @@ public class BookViewModel extends ViewModel {
     private com.guillaouic.test.Application context;
 
     private final ObservableField<String> search = new ObservableField<>("");
-    private MutableLiveData<Book> BookList;
-    private LiveData<List<Item>> ItemListDatabase;
-    public MutableLiveData<Book> selected;
-
+    private MutableLiveData<String> errorMessage;
+    private LiveData<List<Item>> itemListDatabase;
+    private MutableLiveData<Book> bookList;
     public ObservableInt loading;
 
 
     public BookViewModel(com.guillaouic.test.Application application) {
-        context=application;
-        repository =  ((Application)context).getRepository();
-        BookList = repository.getBook();
-        ItemListDatabase = repository.getData_database();
+        context = application;
+        repository = ((Application) context).getRepository();
+        itemListDatabase = repository.getBook_database();
+        errorMessage = repository.getErrorMessage();
+        bookList = repository.getBook();
 
         loading = new ObservableInt(View.GONE);
     }
 
     // Constructor use for unit test
-    public BookViewModel(){
-        repository =  new DataRepository();
-        BookList = new MutableLiveData<>();
-        BookList=repository.getBook();
+    public BookViewModel() {
+        repository = new DataRepository();
+        bookList = new MutableLiveData<>();
+        bookList = repository.getBook();
         loading = new ObservableInt(View.GONE);
     }
 
 
-    // Observer called in Search_Fragment, listening for network data call.
+    // Observer called in Search_Fragment, listening for network book data call.
 
     public MutableLiveData<Book> getBooks() {
-        return BookList;
+        return bookList;
     }
 
     // Observer called in History_Fragment, listening for database call.
 
-    public LiveData<List<Item>> getBookListDatabase() {
-        return ItemListDatabase;
+    public LiveData<List<Item>> getbookListDatabase() {
+        return itemListDatabase;
     }
 
+    // Observer called in Fragments , listening for error call.
+
+    public MutableLiveData<String> getErrorMessage() {
+        return errorMessage;
+    }
 
     public void GetBook_fromDatabase() {
         repository.getBookDatabase();
@@ -99,9 +106,12 @@ public class BookViewModel extends ViewModel {
     public final SearchClickCallback mSearchClickCallback = new SearchClickCallback() {
         @Override
         public void onClick(String search) {
-            // Load  network data, linked livedata.
-            repository.loadNetworkData().getBooks_Network(search);
-            loading.set(View.VISIBLE);
+            if (Utils.isConnected(context) && getTitle().get().length()>0) {
+                repository.loadNetworkData().getBooks_Network(search);
+                loading.set(View.VISIBLE);
+            } else {
+                errorMessage.postValue(Message.no_network.name());
+            }
         }
     };
 
@@ -118,7 +128,6 @@ public class BookViewModel extends ViewModel {
         }
     };
 
-
     // ClickCallback History Button
 
     public final HistoryClickCallback mHistoryClickCallBack = new HistoryClickCallback() {
@@ -128,7 +137,6 @@ public class BookViewModel extends ViewModel {
             context.startActivity(intent);
         }
     };
-
 
     /*
      *  Observer for Editext search
@@ -143,7 +151,6 @@ public class BookViewModel extends ViewModel {
             }
         }
     };
-
 
     @Override
     protected void onCleared() {
