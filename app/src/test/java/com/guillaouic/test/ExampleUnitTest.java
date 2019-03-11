@@ -35,9 +35,8 @@ public class ExampleUnitTest {
     private Observer<Book> observer;
 
     private Application application;
-    Book book;
-    BookViewModel viewModel;
-    Boolean toto=false;
+    private Book book;
+    private BookViewModel viewModel;
 
     @Test
     public void addition_isCorrect() {
@@ -62,7 +61,7 @@ public class ExampleUnitTest {
         book = generateItem();
         viewModel = new BookViewModel();
         viewModel.getBooks().observeForever(observer);
-        viewModel.mSearchClickCallback.onClick("complexe");
+        viewModel.mSearchClickCallback.onClick("test");
         viewModel.getRepository().getBook().postValue(book);
         verify(observer).onChanged(book);
     }
@@ -71,7 +70,6 @@ public class ExampleUnitTest {
         Book book = new Book();
         book.setKind("test");
         book.setTotalItems(1);
-        book.setId(Long.getLong("00000"));
 
         List<Item> itemlist = new ArrayList<>();
         Item item = new Item();
