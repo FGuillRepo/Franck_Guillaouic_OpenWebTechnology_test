@@ -86,37 +86,37 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile("com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion", {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    compile 'com.android.support:support-annotations:+'
-    compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
-    compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
-    compile "com.android.support:design:$rootProject.supportLibraryVersion"
-    compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
-    compile "com.android.support:support-v4:$rootProject.supportLibraryVersion"
-    compile "com.android.support.test.espresso:espresso-idling-resource:$rootProject.espressoVersion"
-    compile "com.google.guava:guava:$rootProject.guavaVersion"
+    implementation 'com.android.support:support-annotations:+'
+    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:design:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
+    implementation "com.android.support.test.espresso:espresso-idling-resource:$rootProject.espressoVersion"
+    implementation "com.google.guava:guava:$rootProject.guavaVersion"
     implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
 
-    compile "com.android.support:multidex:$rootProject.multidex"
+    implementation "com.android.support:multidex:$rootProject.multidex"
 
-    compile "com.squareup.retrofit2:retrofit:$rootProject.retrofit"
-    compile "com.squareup.retrofit2:converter-gson:$rootProject.convertergson"
-    compile "com.squareup.retrofit2:adapter-rxjava2:$rootProject.adapterrxjava2"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.convertergson"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.adapterrxjava2"
 
-    compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroid"
-    compile "io.reactivex.rxjava2:rxjava:$rootProject.rxjava"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroid"
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjava"
 
-    compile "com.squareup.okhttp3:okhttp:$rootProject.okhttp"
-    compile "com.google.code.gson:gson:$rootProject.gson"
-    compile "com.squareup.picasso:picasso:$rootProject.picasso"
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.okhttp"
+    implementation "com.google.code.gson:gson:$rootProject.gson"
+    implementation "com.squareup.picasso:picasso:$rootProject.picasso"
     implementation "android.arch.lifecycle:extensions:$rootProject.androidarc"
     implementation "android.arch.lifecycle:viewmodel:$rootProject.androidarc"
-    testCompile "android.arch.core:core-testing:$rootProject.androidarc"
+    testImplementation "android.arch.core:core-testing:$rootProject.androidarc"
 
     testImplementation "junit:junit:$rootProject.junit"
     testImplementation "androidx.arch.core:core-testing:$rootProject.coretesting"

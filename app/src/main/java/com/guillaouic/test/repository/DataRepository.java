@@ -11,7 +11,7 @@ import com.guillaouic.test.pojo.Item;
 import java.util.List;
 
 /*
- *  DataRepository : Permit to call/observe data books from network or database,
+ *  DataRepository : Permit to call data books from network or database. Emit data to BookViewModel
  * */
 
 public class DataRepository {
