@@ -29,13 +29,14 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private RowRecyclerLayoutitemBinding binding;
     private List<? extends Item> items;
-
+    private Context context;
     @Nullable
     private final RecyclerViewClickCallback mReclyclerClickCallback;
 
 
     public RepositoryAdapter(Context context, @Nullable RecyclerViewClickCallback mReclyclerClickCallback) {
         this.mReclyclerClickCallback = mReclyclerClickCallback;
+        this.context=context;
     }
 
 

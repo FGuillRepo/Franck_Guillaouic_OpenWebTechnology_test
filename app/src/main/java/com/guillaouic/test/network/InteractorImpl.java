@@ -30,7 +30,7 @@ public class InteractorImpl {
         return errorMessage;
     }
 
-    // Request repository and fill recycler adapter
+    // Request Book API and emit value to repository if succeed
     public MutableLiveData<Book> getBooks_Network(String search) {
 
         Observable<Book> call = new RetroFitClient().getRetroFitService().getBooks(search);
