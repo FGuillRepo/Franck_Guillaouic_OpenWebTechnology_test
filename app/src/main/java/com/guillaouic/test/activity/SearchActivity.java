@@ -13,7 +13,7 @@ import com.guillaouic.test.fragment.Search_fragment;
 import com.guillaouic.test.utils.ActivityUtils;
 
 
-public class SearchActivity extends AppCompatActivity implements View.OnClickListener{
+public class SearchActivity extends AppCompatActivity{
 
 
     @Override
@@ -32,17 +32,10 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
 
     @Override
-    public boolean onCreateOptionsMenu(final Menu pMenu) {
-        return true;
-    }
-
-
-    @Override
     public void onResume() {
         super.onResume();
 
     }
-
 
     @Override
     public void onSaveInstanceState(Bundle savedState) {
@@ -62,7 +55,6 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         return super.onKeyDown(keyCode, event);
     }
 
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -78,12 +70,6 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     public void onDestroy() {
         super.onDestroy();
     }
-
-
-    @Override
-    public void onClick(View view) {
-    }
-
 
 }
 

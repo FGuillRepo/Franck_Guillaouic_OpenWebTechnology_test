@@ -28,7 +28,7 @@ import instagallery.app.com.gallery.databinding.RowRecyclerLayoutitemBinding;
 public class RepositoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private RowRecyclerLayoutitemBinding binding;
-    private List<? extends Item> bookList;
+    private List<? extends Item> items;
 
     @Nullable
     private final RecyclerViewClickCallback mReclyclerClickCallback;
@@ -55,7 +55,7 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemCount() {
-            return bookList == null ? 0 : bookList.size();
+            return items == null ? 0 : items.size();
     }
 
 
@@ -82,14 +82,14 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 
     public void setBookList(final List<? extends Item> item) {
-        if (bookList==null) {
-            bookList = item;
+        if (items==null) {
+            items = item;
             notifyItemRangeInserted(0, item.size());
         }else {
             DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtil.Callback() {
                 @Override
                 public int getOldListSize() {
-                    return bookList.size();
+                    return items.size();
                 }
 
                 @Override
@@ -99,25 +99,25 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
                 @Override
                 public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                    Item old = bookList.get(oldItemPosition);
+                    Item old = items.get(oldItemPosition);
                     Item comment = item.get(newItemPosition);
                     return old.getId() == comment.getId();
                 }
 
                 @Override
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    Item old = bookList.get(oldItemPosition);
+                    Item old = items.get(oldItemPosition);
                     Item comment = item.get(newItemPosition);
                     return old.getId() == comment.getId();
                 }
             });
-            bookList = item;
+            items = item;
             diffResult.dispatchUpdatesTo(this);
         }
     }
 
     public Item getItem(int position) {
-        return bookList.get(position);
+        return items.get(position);
     }
 
 
