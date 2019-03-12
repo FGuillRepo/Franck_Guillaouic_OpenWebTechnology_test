@@ -18,8 +18,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import instagallery.app.com.gallery.R;
-import instagallery.app.com.gallery.databinding.RowRecyclerLayoutitemBinding;
+import com.guillaouic.test.R;
+import com.guillaouic.test.databinding.RowRecyclerLayoutitemBinding;
 
 /*
  *  Books Adapter : Bind and show books in Recyclerview.

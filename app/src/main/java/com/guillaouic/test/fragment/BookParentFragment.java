@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import instagallery.app.com.gallery.R;
+import com.guillaouic.test.R;
 
 /*
  *  Parent Fragment for Book fragments : Details_fragment, History_fragment, Search_fragment

@@ -20,8 +20,8 @@ import com.guillaouic.test.pojo.Item;
 
 import java.util.List;
 
-import instagallery.app.com.gallery.R;
-import instagallery.app.com.gallery.databinding.FragmentHistoryBinding;
+import com.guillaouic.test.R;
+import com.guillaouic.test.databinding.FragmentHistoryBinding;
 
 /*
  *  History_fragment :show book history, data retrieve from database

@@ -13,8 +13,8 @@ import com.guillaouic.test.database.Database;
 import com.guillaouic.test.pojo.Item;
 import com.guillaouic.test.database.Database_Insert;
 
-import instagallery.app.com.gallery.R;
-import instagallery.app.com.gallery.databinding.FragmentDetailBinding;
+import com.guillaouic.test.R;
+import com.guillaouic.test.databinding.FragmentDetailBinding;
 
 /*
  *  Details_fragment :show book details

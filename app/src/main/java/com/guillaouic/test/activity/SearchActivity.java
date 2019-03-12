@@ -7,7 +7,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 
-import instagallery.app.com.gallery.R;
+import com.guillaouic.test.R;
 
 import com.guillaouic.test.fragment.Search_fragment;
 import com.guillaouic.test.utils.ActivityUtils;

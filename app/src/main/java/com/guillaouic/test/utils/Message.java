@@ -6,7 +6,7 @@ import android.net.NetworkInfo;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 
-import instagallery.app.com.gallery.R;
+import com.guillaouic.test.R;
 
 
    public enum Message {

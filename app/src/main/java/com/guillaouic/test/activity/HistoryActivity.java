@@ -10,7 +10,7 @@ import android.view.View;
 import com.guillaouic.test.fragment.History_fragment;
 import com.guillaouic.test.utils.ActivityUtils;
 
-import instagallery.app.com.gallery.R;
+import com.guillaouic.test.R;
 
 
 public class HistoryActivity extends AppCompatActivity{

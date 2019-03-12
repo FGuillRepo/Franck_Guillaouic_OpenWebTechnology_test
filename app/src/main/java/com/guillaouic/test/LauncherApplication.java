@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import com.guillaouic.test.activity.SearchActivity;
 
-import instagallery.app.com.gallery.R;
+import com.guillaouic.test.R;
 
 
 public class LauncherApplication extends Activity {

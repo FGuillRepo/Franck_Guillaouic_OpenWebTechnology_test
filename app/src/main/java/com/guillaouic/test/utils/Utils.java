@@ -11,7 +11,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
-import instagallery.app.com.gallery.R;
+import com.guillaouic.test.R;
 
 
 public class Utils {

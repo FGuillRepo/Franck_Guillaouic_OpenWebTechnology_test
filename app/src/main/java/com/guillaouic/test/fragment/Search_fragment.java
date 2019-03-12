@@ -29,8 +29,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import instagallery.app.com.gallery.R;
-import instagallery.app.com.gallery.databinding.FragmentSearchBinding;
+import com.guillaouic.test.R;
+import com.guillaouic.test.databinding.FragmentSearchBinding;
 
 /*
  *  Search_fragment :search a book by title, retrieve data from book API over network.

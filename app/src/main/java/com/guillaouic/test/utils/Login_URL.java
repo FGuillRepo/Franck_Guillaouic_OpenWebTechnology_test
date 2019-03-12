@@ -2,7 +2,7 @@ package com.guillaouic.test.utils;
 
 import android.content.Context;
 
-import instagallery.app.com.gallery.R;
+import com.guillaouic.test.R;
 
 /**
  * Created by Franck Guillaouic on 12/03/2018.

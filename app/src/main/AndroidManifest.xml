@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="instagallery.app.com.gallery">
+    package="com.guillaouic.test">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera.ar" android:required="true"/>
 
     <application
         android:allowBackup="false"
@@ -21,8 +17,6 @@
         android:windowSoftInputMode="adjustResize"
         android:configChanges="orientation|screenSize"
         >
-
-        <meta-data android:name="com.google.ar.core" android:value="required" />
 
         <activity android:name="com.guillaouic.test.LauncherApplication">
             <intent-filter>
