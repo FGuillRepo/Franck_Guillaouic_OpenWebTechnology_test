@@ -91,7 +91,7 @@ public class Search_fragment extends BookParentFragment implements SubscribeMode
         ((BookViewModel)model).getErrorMessage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String error) {
-                    Log.d("errorretrieve",error);
+                    Log.d("Handle error",error);
             }
         });
     }
