@@ -5,6 +5,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,7 +42,6 @@ public class Search_fragment extends BookParentFragment implements SubscribeMode
     private RepositoryAdapter repositoryAdapter;
     private BookViewModel bookViewModel;
     private FragmentSearchBinding mBinding;
-
 
     public static Search_fragment newInstance() {
         Search_fragment myFragment = new Search_fragment();

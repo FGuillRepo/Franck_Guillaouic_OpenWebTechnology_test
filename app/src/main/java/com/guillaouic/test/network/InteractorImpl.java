@@ -31,9 +31,9 @@ public class InteractorImpl {
     }
 
     // Request repository and fill recycler adapter
-    public MutableLiveData<Book> getBooks_Network(String title) {
+    public MutableLiveData<Book> getBooks_Network(String search) {
 
-        Observable<Book> call = new RetroFitClient().getRetroFitService().getBooks(title);
+        Observable<Book> call = new RetroFitClient().getRetroFitService().getBooks(search);
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<Book>() {

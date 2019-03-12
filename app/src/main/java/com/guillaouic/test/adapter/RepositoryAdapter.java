@@ -27,7 +27,7 @@ import instagallery.app.com.gallery.databinding.RowRecyclerLayoutitemBinding;
 
 public class RepositoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-   private RowRecyclerLayoutitemBinding binding;
+    private RowRecyclerLayoutitemBinding binding;
     private List<? extends Item> bookList;
 
     @Nullable
