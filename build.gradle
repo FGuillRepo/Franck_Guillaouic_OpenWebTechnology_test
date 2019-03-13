@@ -67,7 +67,7 @@ ext {
     mockitocore = "1.10.19"
     androidarc = "1.1.1"
     coretesting = "2.0.0"
-    testrunner = "1.1.1"
+    testrunner = "1.0.2"
     hamcrest = "1.3"
 }
 
