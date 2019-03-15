@@ -1,6 +1,9 @@
 # Franck_Guillaouic_OpenWebTechnology_test
 Test for Open Web Technology
 
+Components and architecture choosed:
+MVVM : Data-binding, LiveData, ViewModel, RetroFit, Picasso, RecyclerView ,Espresso, Junit
+
 Instructions:
 
 I'd like to assign you a little Android test as part of the recruitment process. 
